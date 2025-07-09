@@ -11,22 +11,29 @@
 └── README.md
 ```
 
-## Installation
+## Installation étape par étape
 
-### 1. Base de données (MariaDB)
-- Importez `/database/init.sql` dans votre MariaDB.
-- (Optionnel) Lancez `/server/init_admin.php` pour créer un admin par défaut.
+### 1. Créer la base de données MariaDB/MySQL
+- Connecte-toi à phpMyAdmin ou à ton outil SQL.
+- Crée une base nommée par exemple `bts_portfolio`.
 
-### 2. Back-end PHP
-- Placez `/server` sur votre hébergement PHP (OVH, 000WebHost, etc.).
-- Configurez la connexion à la base dans `/server/config.php`.
+### 2. Importer le script SQL
+- Sélectionne la base `bts_portfolio`.
+- Clique sur “Importer” et choisis le fichier `database/init.sql`.
+- Valide pour créer les tables (`admin`, `projects`, `veille`)
 
-### 3. Front-end React
-- Placez-vous dans `/client` puis lancez :
-  ```bash
-  npm install --legacy-peer-deps
-  npm start
-  ```
+### 3. Configurer la connexion dans `server/config.php`
+- Mets à jour les variables `$DB_HOST`, `$DB_NAME`, `$DB_USER`, `$DB_PASS` selon tes accès MariaDB.
+
+### 4. Créer l’admin par défaut
+- Place-toi dans le dossier `/server` sur ton hébergement ou en local.
+- Lance le script `init_admin.php` dans le navigateur ou via la ligne de commande :
+  - Navigateur : `http://localhost/portfolio-fdme/server/init_admin.php`
+  - Ligne de commande : `php init_admin.php`
+- Un message “Admin créé : admin@admin.com / admin123” doit s’afficher.
+
+### 5. Connexion admin
+- Utilise l’email `admin@admin.com` et le mot de passe `admin123` sur le site.
 
 ## Fonctionnalités principales
 - Portfolio React moderne, responsive
