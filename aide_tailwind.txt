@@ -1,0 +1,20 @@
+# Pour utiliser Tailwind CSS avec Create React App (CRA) sans erreur :
+
+1. Désinstalle la version actuelle de Tailwind CSS :
+   npm uninstall tailwindcss
+
+2. Installe la version compatible (3.x) :
+   npm install -D tailwindcss@3.4.3 postcss autoprefixer
+
+3. Vérifie que le fichier postcss.config.js contient :
+   module.exports = {
+     plugins: {
+       tailwindcss: {},
+       autoprefixer: {},
+     },
+   };
+
+4. Redémarre le serveur :
+   npm start
+
+N'utilise PAS @tailwindcss/postcss dans la config avec CRA.

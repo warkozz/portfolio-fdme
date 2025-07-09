@@ -1,0 +1,97 @@
+Crée une application web complète pour un portfolio professionnel d'étudiant en BTS SIO SLAM. Le front-end doit être développé en **React**, le back-end en **PHP sécurisé et autonome** avec une base de données **MySQL**.
+
+🎯 Objectifs principaux :
+- Un site portfolio React moderne, responsive et structuré
+- Une interface d’administration sécurisée en PHP (login, sessions, protection CSRF)
+- Un back-end PHP complet, autonome, sans dépendances externes lourdes, avec API REST
+- Gestion dynamique des projets (CRUD complet, upload image, visibilité)
+- Gestion complète des infos de veille (CRUD) via interface admin sécurisée
+- Sécurisation des échanges (validation, sanitation, protection CSRF, XSS, injection SQL)
+- Projet facile à déployer sur un serveur PHP classique (OVH, 000WebHost, etc.)
+- Téléchargement et installation de toutes les librairies et frameworks nécessaires (front et back)
+- Documentation complète README.md expliquant l’installation, la configuration, l’utilisation, et la structure du projet
+- Gestion d’un dépôt GitHub avec commits réguliers et clairs, utilisant une convention de messages structurés comme `Fix/...`, `Feat/...`, etc., et push automatique à chaque modification majeure
+
+---
+
+📁 Structure recommandée :
+
+/bts-portfolio/
+│
+├── /client/                 # Front-end React
+│
+├── /server/                 # Back-end PHP sécurisé et autonome
+│
+├── /database/               # Script SQL pour création tables
+└── README.md
+
+---
+
+🧩 Fonctionnalités back-end PHP :
+
+- Authentification admin avec sessions PHP et hashage sécurisé des mots de passe (password_hash)
+- Protection CSRF sur tous les formulaires d'administration
+- Validation et sanitation des données reçues (API + formulaires)
+- Upload d’images sécurisé (contrôle MIME, taille, extension)
+- API REST JSON sécurisée exposant :
+  - `GET /api/get_projects.php` (projets publics visibles)
+  - `GET /api/get_all_projects.php` (admin, tous projets)
+  - `POST /api/add_project.php`
+  - `POST /api/update_project.php`
+  - `POST /api/delete_project.php`
+  - `POST /api/toggle_visibility.php`
+  - `GET /api/get_veille.php` (infos veille publiques)
+  - `GET /api/get_all_veille.php` (admin, toutes infos veille)
+  - `POST /api/add_veille.php`
+  - `POST /api/update_veille.php`
+  - `POST /api/delete_veille.php`
+  - `POST /api/login.php` (auth admin)
+- Interface admin web avec :
+  - Login/logout
+  - Dashboard CRUD projets (formulaires protégés CSRF)
+  - Dashboard CRUD veille (formulaires protégés CSRF)
+  - Gestion visibilité et modification projets et veille
+
+---
+
+🖥️ Front-end React :
+
+- Pages : Home, About (avec présentation Capgemini), Projects, Veille (affichage dynamique des infos), Technologies (avec logos triés), CV, Contact, AdminPanel sécurisé
+- Composants modulaires (ProjectCard, VeilleCard, TechCard, Formulaires)
+- Navigation avec React Router
+- Appels API avec Axios + gestion erreurs + token/session côté front pour admin
+- Formulaires gérés avec Formik + Yup validation
+- Tailwind CSS responsive + thème clair/sombre
+- Design professionnel et accessible
+- Téléchargement et installation de toutes les dépendances nécessaires via npm/yarn
+
+---
+
+🗃️ Base de données MySQL :
+
+```sql
+CREATE TABLE admin (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  email VARCHAR(100) UNIQUE NOT NULL,
+  password VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE projects (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  title VARCHAR(255) NOT NULL,
+  description TEXT NOT NULL,
+  image VARCHAR(255),
+  github_link VARCHAR(255),
+  competencies TEXT,
+  visible BOOLEAN DEFAULT TRUE,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE veille (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  title VARCHAR(255) NOT NULL,
+  content TEXT NOT NULL,
+  url VARCHAR(255),
+  visible BOOLEAN DEFAULT TRUE,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
