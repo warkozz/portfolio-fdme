@@ -13,13 +13,13 @@ const technologies = [
 
 const Technologies = () => (
   <Layout>
-    <div className="max-w-4xl mx-auto mt-10">
-      <h1 className="text-3xl font-bold mb-6 text-gray-900 dark:text-white">Technologies</h1>
-      <div className="flex flex-wrap gap-6 justify-center">
+    <div className="max-w-5xl mx-auto mt-10">
+      <h1 className="text-4xl font-extrabold mb-8 text-gray-900 dark:text-white">Technologies</h1>
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
         {technologies.map((tech) => (
-          <div key={tech.name} className="flex flex-col items-center">
+          <div key={tech.name} className="bg-white dark:bg-gray-800 rounded-2xl shadow-soft p-4 flex flex-col items-center">
             <img src={tech.logo} alt={tech.name} className="w-16 h-16 mb-2" />
-            <span className="text-lg font-medium text-gray-900 dark:text-white">{tech.name}</span>
+            <span className="text-base font-medium text-gray-900 dark:text-white">{tech.name}</span>
           </div>
         ))}
       </div>

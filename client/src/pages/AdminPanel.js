@@ -28,17 +28,17 @@ const AdminPanel = () => {
     }
   };
 
-  if (loading) return <Layout><div>Chargement...</div></Layout>;
+  if (loading) return <Layout><div className="text-gray-500">Chargement...</div></Layout>;
   if (!isAdmin && !loggedIn) {
     return (
       <Layout>
-        <div className="max-w-md mx-auto mt-10">
+        <div className="max-w-md mx-auto mt-10 bg-white dark:bg-gray-800 rounded-2xl shadow-soft p-6">
           <h1 className="text-3xl font-bold mb-4 text-gray-900 dark:text-white">Admin - Connexion</h1>
           <form onSubmit={handleLogin} className="flex flex-col gap-4">
-            <input type="email" placeholder="Email" className="border p-2" value={email} onChange={e => setEmail(e.target.value)} />
-            <input type="password" placeholder="Mot de passe" className="border p-2" value={password} onChange={e => setPassword(e.target.value)} />
+            <input type="email" placeholder="Email" className="w-full border rounded-md p-2 bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-600" value={email} onChange={e => setEmail(e.target.value)} />
+            <input type="password" placeholder="Mot de passe" className="w-full border rounded-md p-2 bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-600" value={password} onChange={e => setPassword(e.target.value)} />
             {error && <div className="text-red-500 text-sm">{error}</div>}
-            <button type="submit" className="bg-blue-600 text-white p-2 rounded">Se connecter</button>
+            <button type="submit" className="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-md font-medium self-start">Se connecter</button>
           </form>
         </div>
       </Layout>
@@ -47,15 +47,22 @@ const AdminPanel = () => {
 
   return (
     <Layout>
-      <div className="max-w-2xl mx-auto mt-10">
-        <h1 className="text-3xl font-bold mb-4 text-gray-900 dark:text-white">AdminPanel</h1>
-        <p className="text-gray-700 dark:text-gray-300">Bienvenue, vous êtes connecté en tant qu'admin.</p>
-        <div className="mt-8">
-          <ProjectsAdmin />
-          <div className="my-8" />
-          <VeilleAdmin />
+      <div className="max-w-5xl mx-auto mt-6">
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">AdminPanel</h1>
+            <p className="text-gray-700 dark:text-gray-300">Bienvenue, vous êtes connecté en tant qu'admin.</p>
+          </div>
+          <button onClick={logout} className="bg-gray-700 hover:bg-gray-800 text-white px-4 py-2 rounded-md">Déconnexion</button>
         </div>
-        <button onClick={logout} className="mt-8 bg-gray-700 text-white px-4 py-2 rounded">Déconnexion</button>
+        <div className="grid grid-cols-1 gap-8">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-soft p-6">
+            <ProjectsAdmin />
+          </div>
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-soft p-6">
+            <VeilleAdmin />
+          </div>
+        </div>
       </div>
     </Layout>
   );
