@@ -121,7 +121,7 @@ const Layout = ({ children }) => {
           <div>© {new Date().getFullYear()} Mon Portfolio – Tous droits réservés</div>
           <div className="flex gap-4 mt-2 md:mt-0">
             <a href="#" className="hover:text-primary-700">GitHub</a>
-            <a href="#" className="hover:text-primary-700">Linkedin</a>
+            <a href="https://www.linkedin.com/in/rayane-hakim-5849bb218/" className="hover:text-primary-700">Linkedin</a>
           </div>
         </div>
       </footer>
