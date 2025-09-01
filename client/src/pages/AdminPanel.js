@@ -5,7 +5,7 @@ import ProjectsAdmin from '../components/admin/ProjectsAdmin';
 import VeilleAdmin from '../components/admin/VeilleAdmin';
 import { useAuth } from '../context/AuthContext';
 
-const API_URL = 'http://localhost/portfolio-fdme/server/api';
+const API_URL = '/portfolio-fdme/server/api';
 
 const AdminPanel = () => {
   const { isAdmin, setIsAdmin, loading, logout } = useAuth();
@@ -20,7 +20,14 @@ const AdminPanel = () => {
     try {
       const csrfRes = await axios.get(`${API_URL}/get_csrf.php`, { withCredentials: true });
       const csrf_token = csrfRes.data.csrf_token;
-      await axios.post(`${API_URL}/login.php`, { email, password, csrf_token }, { withCredentials: true });
+      const body = new URLSearchParams();
+      body.append('email', email);
+      body.append('password', password);
+      body.append('csrf_token', csrf_token);
+      await axios.post(`${API_URL}/login.php`, body, {
+        withCredentials: true,
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+      });
       setLoggedIn(true);
       setIsAdmin(true);
     } catch (err) {

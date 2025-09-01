@@ -3,7 +3,7 @@ import axios from 'axios';
 import AddVeilleForm from './AddVeilleForm';
 import EditVeilleForm from './EditVeilleForm';
 
-const API_URL = 'http://localhost/portfolio-fdme/server/api';
+const API_URL = '/portfolio-fdme/server/api';
 
 const VeilleAdmin = () => {
   const [veille, setVeille] = useState([]);
@@ -30,7 +30,10 @@ const VeilleAdmin = () => {
     if (!window.confirm('Supprimer cette veille ?')) return;
     const csrfRes = await axios.get(`${API_URL}/get_csrf.php`, { withCredentials: true });
     const csrf_token = csrfRes.data.csrf_token;
-    await axios.post(`${API_URL}/delete_veille.php`, { id, csrf_token }, { withCredentials: true, headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
+    const body = new URLSearchParams();
+    body.append('id', String(id));
+    body.append('csrf_token', csrf_token);
+    await axios.post(`${API_URL}/delete_veille.php`, body, { withCredentials: true, headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
     fetchAll();
   };
 

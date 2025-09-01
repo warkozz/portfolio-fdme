@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const API_URL = 'http://localhost/portfolio-fdme/server/api';
+const API_URL = '/portfolio-fdme/server/api';
 
 const AddVeilleForm = ({ onAdded }) => {
   const [title, setTitle] = useState('');
@@ -17,10 +17,15 @@ const AddVeilleForm = ({ onAdded }) => {
     try {
       const csrfRes = await axios.get(`${API_URL}/get_csrf.php`, { withCredentials: true });
       const csrf_token = csrfRes.data.csrf_token;
-      await axios.post(`${API_URL}/add_veille.php`,
-        { title, content, url, csrf_token },
-        { withCredentials: true, headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }
-      );
+      const body = new URLSearchParams();
+      body.append('title', title);
+      body.append('content', content);
+      body.append('url', url);
+      body.append('csrf_token', csrf_token);
+      await axios.post(`${API_URL}/add_veille.php`, body, {
+        withCredentials: true,
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+      });
       setTitle(''); setContent(''); setUrl('');
       setSuccess(true);
       if (onAdded) onAdded();

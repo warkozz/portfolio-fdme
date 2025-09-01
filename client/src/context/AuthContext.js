@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 
-const API_URL = 'http://localhost/portfolio-fdme/server/api';
+const API_URL = '/portfolio-fdme/server/api';
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {

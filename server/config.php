@@ -1,5 +1,17 @@
 <?php
 // config.php
+// CORS pour permettre les requêtes depuis le dev server React
+header('Access-Control-Allow-Origin: http://localhost:3000');
+header('Access-Control-Allow-Credentials: true');
+header('Access-Control-Allow-Headers: Content-Type, X-Requested-With, Authorization, Accept');
+header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(204);
+    exit;
+}
+// Réduire le bruit des erreurs PHP dans les réponses JSON
+ini_set('display_errors', '0');
+error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED);
 // Connexion sécurisée à MariaDB/MySQL
 $DB_HOST = 'localhost';
 $DB_NAME = 'bts_portfolio';

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const API_URL = 'http://localhost/portfolio-fdme/server/api';
+const API_URL = '/portfolio-fdme/server/api';
 
 const EditProjectForm = ({ project, onUpdated, onCancel }) => {
   const [title, setTitle] = useState(project.title);

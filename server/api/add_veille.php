@@ -1,8 +1,12 @@
 <?php
 // add_veille.php
 header('Content-Type: application/json');
-session_start();
+// CORS + OPTIONS centralisés
 require_once '../config.php';
+// Session
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 require_once '../csrf.php';
 if (!isset($_SESSION['admin'])) {
     http_response_code(401);
@@ -18,9 +22,14 @@ $title = trim($_POST['title'] ?? '');
 $content = trim($_POST['content'] ?? '');
 $url = trim($_POST['url'] ?? '');
 $csrf = $_POST['csrf_token'] ?? '';
-if (!$title || !$content || !verify_csrf_token($csrf)) {
+if (!$title || !$content) {
     http_response_code(400);
-    echo json_encode(['error' => 'Champs manquants ou CSRF']);
+    echo json_encode(['error' => 'Champs title/content manquants']);
+    exit;
+}
+if (!verify_csrf_token($csrf)) {
+    http_response_code(400);
+    echo json_encode(['error' => 'CSRF invalide']);
     exit;
 }
 $stmt = $pdo->prepare('INSERT INTO veille (title, content, url) VALUES (?, ?, ?)');

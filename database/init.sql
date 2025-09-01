@@ -23,3 +23,7 @@ CREATE TABLE veille (
   visible BOOLEAN DEFAULT TRUE,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+-- Indexes to improve read performance on list queries
+CREATE INDEX idx_projects_visible_created_at ON projects (visible, created_at);
+CREATE INDEX idx_veille_visible_created_at ON veille (visible, created_at);

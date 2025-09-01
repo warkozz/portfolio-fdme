@@ -2,14 +2,17 @@ import React, { useEffect, useState } from 'react';
 import Layout from '../components/Layout';
 import axios from 'axios';
 
+// Base URL de l'API PHP (même que les composants admin)
+const API_URL = '/portfolio-fdme/server/api';
+
 const Projects = () => {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get('/server/api/get_projects.php')
+    axios.get(`${API_URL}/get_projects.php`)
       .then(res => {
-        setProjects(res.data.projects || []);
+        setProjects(Array.isArray(res.data) ? res.data : (res.data.projects || []));
         setLoading(false);
       })
       .catch(() => setLoading(false));
