@@ -51,7 +51,13 @@ npm start
 ```
 - Application: http://localhost:3000
 - Proxy dev: `client/package.json` définit `"proxy": "http://localhost"`.
-- Base API utilisée par le front: `client/src/api/projects.js` et `client/src/api/veille.js` pointent vers `'/portfolio-fdme/server/api'`.
+- Base API côté front: centralisée dans `client/src/api/config.js`.
+  - Variable d'env: `REACT_APP_API_BASE` (facultatif)
+  - Valeur par défaut: `'/portfolio-fdme/server/api'`
+  - Exemples:
+    - Dev Apache/XAMPP: `REACT_APP_API_BASE=/portfolio-fdme/server/api`
+    - Dev serveur PHP intégré: `REACT_APP_API_BASE=http://127.0.0.1:8000/api`
+    - Prod domaine: `REACT_APP_API_BASE=/server/api` ou `https://exemple.com/server/api`
 
 ### Back-end (PHP)
 Option 1 — serveur PHP intégré:
@@ -118,7 +124,7 @@ npm install
 npm run build
 ```
    - Déployer le contenu de `client/build` (hébergement statique) ou le servir derrière Apache/Nginx.
-   - Vérifier que les chemins API dans le front (`client/src/api/*.js`) correspondent à votre URL de prod.
+   - Vérifier `REACT_APP_API_BASE` (voir `client/src/api/config.js`) pour coller à l'URL API de prod.
 
 4) Domaine et CORS
    - Idéalement servir front et back sous le même domaine pour éviter CORS.
