@@ -3,13 +3,18 @@
 ## Structure du projet
 
 ```
-/bts-portfolio/
+/portfolio-fdme/
 │
 ├── /client/      # Front-end React
 ├── /server/      # Back-end PHP sécurisé et autonome
 ├── /database/    # Script SQL pour création tables
 └── README.md
 ```
+
+## Pré-requis
+- Node.js LTS + npm (Front)
+- PHP 8.x (CLI ou serveur Apache/Nginx)
+- MariaDB / MySQL
 
 ## Installation étape par étape
 
@@ -34,6 +39,30 @@
 
 ### 5. Connexion admin
 - Utilise l’email `admin@admin.com` et le mot de passe `admin123` sur le site.
+- Important: change ces identifiants immédiatement en production.
+
+## Démarrage rapide (Dev)
+
+### Front-end (React)
+```bash
+cd client
+npm install
+npm start
+```
+- Application: http://localhost:3000
+- Proxy dev: `client/package.json` définit `"proxy": "http://localhost"`.
+- Base API utilisée par le front: `client/src/api/projects.js` et `client/src/api/veille.js` pointent vers `'/portfolio-fdme/server/api'`.
+
+### Back-end (PHP)
+Option 1 — serveur PHP intégré:
+```bash
+php -S 127.0.0.1:8000 -t server
+```
+API disponible sur: `http://127.0.0.1:8000/api/*`
+
+Option 2 — WAMP/XAMPP/Apache:
+- Place le dossier `server/` sous le DocumentRoot (ou configure un VirtualHost).
+- Accès API: `http://localhost/portfolio-fdme/server/api/*`
 
 ## Fonctionnalités principales
 - Portfolio React moderne, responsive
@@ -42,14 +71,28 @@
 - Sécurité : validation, sanitation, CSRF, XSS, SQLi
 - Documentation complète et dépôt GitHub structuré
 
-## API REST (exemples)
-- `POST /api/login.php` : login admin (JSON)
-- `GET /api/get_csrf.php` : obtenir token CSRF
-- `GET /api/check_session.php` : vérifier session admin
-- `GET /api/get_projects.php` : projets publics
-- `GET /api/get_all_projects.php` : tous projets (admin)
-- `POST /api/add_project.php` : ajouter projet (admin)
-- ...
+## API REST (liste)
+Base selon l’hébergement local: `http://localhost/portfolio-fdme/server/api` (Apache) ou `http://127.0.0.1:8000/api` (PHP intégré).
+
+- `POST  /api/login.php` — login admin (JSON)
+- `POST  /api/logout.php` — logout admin
+- `GET   /api/get_csrf.php` — obtenir token CSRF
+- `GET   /api/check_session.php` — vérifier session admin
+- `GET   /api/get_projects.php` — projets publics
+- `GET   /api/get_all_projects.php` — tous projets (admin)
+- `POST  /api/add_project.php` — ajouter projet (admin)
+- `POST  /api/update_project.php` — modifier projet (admin)
+- `POST  /api/delete_project.php` — supprimer projet (admin)
+- `POST  /api/toggle_visibility.php` — basculer visibilité projet (admin)
+- `GET   /api/get_veille.php` — veille publique
+- `GET   /api/get_all_veille.php` — toute la veille (admin)
+- `POST  /api/add_veille.php` — ajouter veille (admin)
+- `POST  /api/update_veille.php` — modifier veille (admin)
+- `POST  /api/delete_veille.php` — supprimer veille (admin)
+
+Notes:
+- Les routes admin nécessitent une session valide + token CSRF (`get_csrf.php`).
+- Upload: vérifier les contraintes MIME/extension/taille dans le code avant envoi.
 
 ## Sécurité
 - Toutes les routes admin nécessitent une session valide et un token CSRF.
@@ -57,10 +100,30 @@
 - Upload images sécurisé (taille, MIME, extension).
 
 ## Déploiement
-- Compatible hébergement PHP classique (MariaDB, OVH, 000WebHost...)
+- Compatible hébergement PHP classique (MariaDB, OVH, 000WebHost, Infomaniak...)
+
+### Production — étapes
+1) Base de données
+   - Créer la base sur l’hébergeur et importer `database/init.sql`.
+
+2) Back-end PHP
+   - Déployer le dossier `server/` sur l’hébergement.
+   - Configurer `server/config.php` avec les accès BDD de prod.
+   - Exécuter `server/init_admin.php` une fois, puis le supprimer ou le protéger.
+
+3) Front-end React
+```bash
+cd client
+npm install
+npm run build
+```
+   - Déployer le contenu de `client/build` (hébergement statique) ou le servir derrière Apache/Nginx.
+   - Vérifier que les chemins API dans le front (`client/src/api/*.js`) correspondent à votre URL de prod.
+
+4) Domaine et CORS
+   - Idéalement servir front et back sous le même domaine pour éviter CORS.
+   - Sinon, configurer CORS côté back et ajuster la base API côté front.
 
 ## Conventions Git
 - Commits : `Feat/...`, `Fix/...`, `Docs/...`, etc.
 - Push à chaque modification majeure.
-
-## Pour plus de détails, voir le prompt dans `prompt.txt`.

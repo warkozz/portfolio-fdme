@@ -66,15 +66,26 @@ const About = () => (
           moderniser les systèmes d'information, améliorer l'accès aux services en ligne, renforcer la sécurité et la conformité (RGPD)
           et optimiser la performance des plateformes.
         </p>
+        {/* Build */}
+        <h3 className="text-base font-semibold text-gray-900 dark:text-white mt-4">Build</h3>
         <ul className="list-disc pl-6 space-y-2 text-gray-600 dark:text-gray-300 marker:text-gray-400">
           <li><span className="font-medium">Conception & développement</span>: définition des solutions, réalisation de fonctionnalités, intégration d'APIs REST/GraphQL, et tests.</li>
           <li><span className="font-medium">Applications web</span>: front-end et back-end, performance, accessibilité.</li>
           <li><span className="font-medium">Applications mobiles</span>: contribution aux features et optimisation de l'expérience utilisateur.</li>
           <li><span className="font-medium">Logiciels & outillage</span>: outils internes et scripts d'automatisation.</li>
-          <li><span className="font-medium">Collaboration</span>: ateliers métiers, réunions de cadrage, démos, suivi d'avancement (Scrum/Kanban).</li>
+        </ul>
+
+        {/* Collaboration */}
+        <h3 className="text-base font-semibold text-gray-900 dark:text-white mt-4">Collaboration</h3>
+        <ul className="list-disc pl-6 space-y-2 text-gray-600 dark:text-gray-300 marker:text-gray-400">
+          <li><span className="font-medium">Ateliers & cadrage</span>: ateliers métiers, recueil des besoins, démos, suivi d'avancement (Scrum/Kanban).</li>
+        </ul>
+
+        {/* Qualité / R&D / Formation */}
+        <h3 className="text-base font-semibold text-gray-900 dark:text-white mt-4">Qualité · R&D · Formation</h3>
+        <ul className="list-disc pl-6 space-y-2 text-gray-600 dark:text-gray-300 marker:text-gray-400">
           <li><span className="font-medium">Qualité & CI/CD</span>: revues de code, automatisation des tests, intégration continue, bonnes pratiques de sécurité.</li>
-          <li><span className="font-medium">R&D</span>: veille technologique, POC/prototypage pour accélérer et sécuriser les choix.
-          </li>
+          <li><span className="font-medium">R&D</span>: veille technologique, POC/prototypage pour accélérer et sécuriser les choix.</li>
           <li><span className="font-medium">Formations & certifications</span>: parcours continus (ex. AWS) pour renforcer les compétences cloud et sécurité.</li>
         </ul>
       </div>
