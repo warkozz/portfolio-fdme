@@ -51,6 +51,7 @@ const CV = () => (
 
     {/* Expérience & Formation */}
     <section className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+      {/* Expérience */}
       <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-soft p-6 md:p-8">
         <div className="flex items-center gap-2 mb-3">
           <span className="h-2.5 w-2.5 rounded-full bg-primary-500" />
@@ -62,26 +63,49 @@ const CV = () => (
               <p className="font-semibold text-gray-900 dark:text-gray-100">Capgemini — Alternance</p>
               <span className="text-xs text-gray-500">2024 — présent</span>
             </div>
-            <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">Dév. web/mobile, ateliers, R&D, CI/CD, sécurité (secteur public).</p>
+            <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
+              Dév. web/mobile, ateliers, R&amp;D, CI/CD, sécurité (secteur public).
+            </p>
           </div>
         </div>
       </div>
+
+      {/* Formation */}
       <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-soft p-6 md:p-8">
         <div className="flex items-center gap-2 mb-3">
           <span className="h-2.5 w-2.5 rounded-full bg-violet-500" />
           <h3 className="font-bold text-xl text-gray-900 dark:text-white">Formation</h3>
         </div>
         <div className="space-y-4">
+          {/* BTS SIO — SLAM */}
           <div className="rounded-xl border border-gray-200 dark:border-gray-700 p-4">
             <div className="flex items-center justify-between">
-              <p className="font-semibold text-gray-900 dark:text-gray-100">BTS SIO — SLAM</p>
+              <p className="font-semibold text-gray-900 dark:text-gray-100">
+                BTS SIO — SLAM, Faculté des Métiers à Massy (91300)
+              </p>
               <span className="text-xs text-gray-500">2024 — 2026</span>
             </div>
-            <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">Développement d'applications, bases de données, sécurité, gestion de projet.</p>
+            <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
+              Développement d'applications, bases de données, sécurité, gestion de projet.
+            </p>
+          </div>
+
+          {/* Développeur Web et Web Mobile — Studi */}
+          <div className="rounded-xl border border-gray-200 dark:border-gray-700 p-4">
+            <div className="flex items-center justify-between">
+              <p className="font-semibold text-gray-900 dark:text-gray-100">
+                Développeur Web et Web Mobile — Studi, école en ligne digitale
+              </p>
+              <span className="text-xs text-gray-500">2022 — 2024</span>
+            </div>
+            <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
+              Création de sites et applications web, bases de données, intégration front-end et développement back-end.
+            </p>
           </div>
         </div>
       </div>
     </section>
+
 
     {/* Compétences */}
     <section className="bg-white dark:bg-gray-800 rounded-2xl shadow-soft p-6 md:p-8">
