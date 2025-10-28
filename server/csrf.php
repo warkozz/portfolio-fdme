@@ -1,7 +1,8 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+// Ne pas démarrer la session ici - elle doit être démarrée avant les headers
+// if (session_status() === PHP_SESSION_NONE) {
+//     session_start();
+// }
 
 function generate_csrf_token() {
     if (empty($_SESSION['csrf_token'])) {
