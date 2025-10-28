@@ -1,8 +1,12 @@
 <?php
 // toggle_visibility.php
 header('Content-Type: application/json');
-session_start();
+// CORS + OPTIONS centralisés
 require_once '../config.php';
+// Session
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 require_once '../csrf.php';
 if (!isset($_SESSION['admin'])) {
     http_response_code(401);
@@ -17,9 +21,19 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 $id = intval($_POST['id'] ?? 0);
 $visible = isset($_POST['visible']) ? (int)$_POST['visible'] : null;
 $csrf = $_POST['csrf_token'] ?? '';
-if (!$id || !is_numeric($visible) || !verify_csrf_token($csrf)) {
+if (!$id) {
     http_response_code(400);
-    echo json_encode(['error' => 'Champs manquants ou CSRF']);
+    echo json_encode(['error' => 'ID manquant']);
+    exit;
+}
+if (!is_numeric($visible)) {
+    http_response_code(400);
+    echo json_encode(['error' => 'Paramètre visible manquant']);
+    exit;
+}
+if (!verify_csrf_token($csrf)) {
+    http_response_code(400);
+    echo json_encode(['error' => 'CSRF invalide']);
     exit;
 }
 $stmt = $pdo->prepare('UPDATE projects SET visible=? WHERE id=?');

@@ -9,10 +9,9 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo json_encode(['error' => 'Méthode non autorisée']);
     exit;
 }
-$data = json_decode(file_get_contents('php://input'), true);
-$email = filter_var($data['email'] ?? '', FILTER_VALIDATE_EMAIL);
-$password = $data['password'] ?? '';
-$csrf = $data['csrf_token'] ?? '';
+$email = filter_var($_POST['email'] ?? '', FILTER_VALIDATE_EMAIL);
+$password = $_POST['password'] ?? '';
+$csrf = $_POST['csrf_token'] ?? '';
 if (!$email || !$password || !verify_csrf_token($csrf)) {
     http_response_code(400);
     echo json_encode(['error' => 'Données invalides ou CSRF']);

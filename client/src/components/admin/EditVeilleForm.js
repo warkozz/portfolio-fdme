@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const API_URL = 'http://localhost/portfolio-fdme/server/api';
+const API_URL = '/portfolio-fdme/server/api';
 
 const EditVeilleForm = ({ veille, onUpdated, onCancel }) => {
   const [title, setTitle] = useState(veille.title);
@@ -15,10 +15,16 @@ const EditVeilleForm = ({ veille, onUpdated, onCancel }) => {
     try {
       const csrfRes = await axios.get(`${API_URL}/get_csrf.php`, { withCredentials: true });
       const csrf_token = csrfRes.data.csrf_token;
-      await axios.post(`${API_URL}/update_veille.php`,
-        { id: veille.id, title, content, url, csrf_token },
-        { withCredentials: true, headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }
-      );
+      const body = new URLSearchParams();
+      body.append('id', String(veille.id));
+      body.append('title', title);
+      body.append('content', content);
+      body.append('url', url);
+      body.append('csrf_token', csrf_token);
+      await axios.post(`${API_URL}/update_veille.php`, body, {
+        withCredentials: true,
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+      });
       if (onUpdated) onUpdated();
     } catch {
       setError("Erreur lors de la modification");

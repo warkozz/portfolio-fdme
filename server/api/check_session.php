@@ -1,6 +1,7 @@
 <?php
 // check_session.php
-header('Content-Type: application/json');
 session_start();
+header('Content-Type: application/json');
+require_once '../config.php';
 echo json_encode(['admin' => isset($_SESSION['admin']) ? true : false]);
 ?>

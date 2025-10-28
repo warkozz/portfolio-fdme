@@ -1,0 +1,51 @@
+# Dépendances
+node_modules/
+vendor/
+
+# Fichiers de build
+client/build/
+*.min.js
+*.min.css
+
+# Fichiers temporaires
+*.log
+*.tmp
+*.bak
+*.backup
+*.swp
+*~
+
+# Fichiers de configuration locale
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE
+.vscode/
+.idea/
+*.sublime-*
+.DS_Store
+
+# Fichiers système
+Thumbs.db
+desktop.ini
+
+# Uploads (images de projets)
+server/uploads/*
+!server/uploads/.gitkeep
+
+# Sessions PHP
+server/sessions/
+
+# Fichiers de test/debug
+server/test_*.php
+server/debug_*.php
+server/*_test.php
+
+# Fichiers sensibles (sécurité)
+server/config_local.php
+*.pem
+*.key
+*.crt

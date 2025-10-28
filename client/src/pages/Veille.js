@@ -17,13 +17,13 @@ const Veille = () => {
 
   return (
     <Layout>
-      <h1 className="text-3xl font-bold mb-6 text-gray-900 dark:text-white">Veille technologique</h1>
-      {loading && <div>Chargement...</div>}
+      <h1 className="text-4xl font-extrabold mb-8 text-gray-900 dark:text-white">Veille technologique</h1>
+      {loading && <div className="text-gray-500">Chargement...</div>}
       {error && <div className="text-red-500">{error}</div>}
       {!loading && !error && veille.length === 0 && (
         <div className="text-gray-500">Aucune veille à afficher.</div>
       )}
-      <div className="flex flex-wrap justify-center">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {veille.map((v) => (
           <VeilleCard key={v.id} veille={v} />
         ))}
