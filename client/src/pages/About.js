@@ -1,10 +1,11 @@
 import React from 'react';
 import Layout from '../components/Layout';
+import PageTitle from '../components/PageTitle';
 
 const About = () => (
-  <Layout>
-    <div className="max-w-4xl mx-auto mt-12 px-4 md:px-0 space-y-8">
-      <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-gray-900 dark:text-white">À propos</h1>
+  <Layout containerSize="default">
+    <div className="space-y-8">
+      <PageTitle title="À propos" />
 
       {/* Présentation personnelle */}
       <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm p-6 md:p-8">

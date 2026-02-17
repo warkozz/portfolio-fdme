@@ -1,41 +1,48 @@
 import React from 'react';
 import Layout from '../components/Layout';
-import { Link } from 'react-router-dom';
+import PageTitle from '../components/PageTitle';
+import Button from '../components/Button';
 
 const CV = () => (
-  <Layout>
+  <Layout containerSize="default">
     {/* En-tête avec déco */}
     <section className="relative text-center mb-10 md:mb-14 overflow-hidden">
       <div className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute -top-24 left-1/4 h-64 w-64 bg-primary-400/20 blur-3xl rounded-full" />
         <div className="absolute -bottom-24 right-1/4 h-72 w-72 bg-violet-400/20 blur-3xl rounded-full" />
       </div>
-      <h1 className="text-4xl md:text-5xl font-extrabold leading-tight">
-        <span className="bg-gradient-to-r from-primary-600 to-violet-500 bg-clip-text text-transparent">Mon CV</span>
-      </h1>
-      <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">Dernière mise à jour • Disponible pour opportunités</p>
+      <div className="flex flex-col items-center">
+        <PageTitle 
+          title="Mon CV" 
+          subtitle="Dernière mise à jour • Disponible pour opportunités" 
+          variant="gradient" 
+        />
+      </div>
       <div className="mt-5 flex justify-center gap-3">
-        <a
-          href="/CV_2025-09-01_Rayane_Hakim.pdf"
-          download
-          aria-label="Télécharger mon CV en PDF"
-          className="inline-flex items-center gap-2 px-5 py-3 bg-primary-600 text-white rounded-lg font-semibold shadow-soft hover:bg-primary-700 hover:shadow-lg transition focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
-        >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
-            <path d="M12 3v12m0 0 4-4m-4 4-4-4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-            <path d="M5 19h14" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
-          </svg>
-          Télécharger le PDF
-        </a>
-        <Link
-          to="/contact"
-          className="inline-flex items-center gap-2 px-5 py-3 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 rounded-lg font-semibold hover:bg-gray-50 dark:hover:bg-gray-800 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
-        >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
-            <path d="M21 8v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8" stroke="currentColor" strokeWidth="1.6"/><path d="M3 8l9 6 9-6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-          Me contacter
-        </Link>
+      <Button
+        as="a"
+        href="/CV_2025-09-01_Rayane_Hakim.pdf"
+        download
+        aria-label="Télécharger mon CV en PDF"
+        className="gap-2"
+      >
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
+          <path d="M12 3v12m0 0 4-4m-4 4-4-4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M5 19h14" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
+        </svg>
+        Télécharger le PDF
+      </Button>
+      <Button
+        as="link"
+        to="/contact"
+        variant="secondary"
+        className="gap-2"
+      >
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
+          <path d="M21 8v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8" stroke="currentColor" strokeWidth="1.6"/><path d="M3 8l9 6 9-6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+        Me contacter
+      </Button>
       </div>
     </section>
 
