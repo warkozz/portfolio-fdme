@@ -20,6 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 $id = intval($_POST['id'] ?? 0);
 $visible = isset($_POST['visible']) ? (int)$_POST['visible'] : null;
+$table = $_POST['table'] ?? 'projects'; // Par défaut 'projects', ou 'veille'
 $csrf = $_POST['csrf_token'] ?? '';
 if (!$id) {
     http_response_code(400);
@@ -31,12 +32,18 @@ if (!is_numeric($visible)) {
     echo json_encode(['error' => 'Paramètre visible manquant']);
     exit;
 }
+// Valider la table pour éviter les injections SQL
+if (!in_array($table, ['projects', 'veille'])) {
+    http_response_code(400);
+    echo json_encode(['error' => 'Table invalide']);
+    exit;
+}
 if (!verify_csrf_token($csrf)) {
     http_response_code(400);
     echo json_encode(['error' => 'CSRF invalide']);
     exit;
 }
-$stmt = $pdo->prepare('UPDATE projects SET visible=? WHERE id=?');
+$stmt = $pdo->prepare("UPDATE $table SET visible=? WHERE id=?");
 $stmt->execute([$visible, $id]);
 echo json_encode(['success' => true]);
 ?>
