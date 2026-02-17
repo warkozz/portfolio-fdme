@@ -11,6 +11,7 @@ CREATE TABLE projects (
   image VARCHAR(255),
   github_link VARCHAR(255),
   competencies TEXT,
+  category ENUM('pro', 'ecole', 'perso') DEFAULT 'perso',
   visible BOOLEAN DEFAULT TRUE,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -20,6 +21,11 @@ CREATE TABLE veille (
   title VARCHAR(255) NOT NULL,
   content TEXT NOT NULL,
   url VARCHAR(255),
+  category ENUM('automatique', 'forum') DEFAULT 'automatique',
   visible BOOLEAN DEFAULT TRUE,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+-- Indexes to improve read performance on list queries
+CREATE INDEX idx_projects_visible_created_at ON projects (visible, created_at);
+CREATE INDEX idx_veille_visible_created_at ON veille (visible, created_at);
