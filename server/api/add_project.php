@@ -18,6 +18,7 @@ $title = trim($_POST['title'] ?? '');
 $description = trim($_POST['description'] ?? '');
 $github_link = trim($_POST['github_link'] ?? '');
 $competencies = trim($_POST['competencies'] ?? '');
+$category = trim($_POST['category'] ?? 'perso');
 $csrf = $_POST['csrf_token'] ?? '';
 if (!$title || !$description || !verify_csrf_token($csrf)) {
     http_response_code(400);
@@ -43,7 +44,10 @@ if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
     $image = uniqid().'.'.$ext;
     move_uploaded_file($_FILES['image']['tmp_name'], '../upload/'.$image);
 }
-$stmt = $pdo->prepare('INSERT INTO projects (title, description, image, github_link, competencies) VALUES (?, ?, ?, ?, ?)');
-$stmt->execute([$title, $description, $image, $github_link, $competencies]);
+if (!in_array($category, ['pro', 'ecole', 'perso'])) {
+    $category = 'perso';
+}
+$stmt = $pdo->prepare('INSERT INTO projects (title, description, image, github_link, competencies, category) VALUES (?, ?, ?, ?, ?, ?)');
+$stmt->execute([$title, $description, $image, $github_link, $competencies, $category]);
 echo json_encode(['success' => true]);
 ?>

@@ -1,276 +1,249 @@
-# 🎓 Portfolio BTS SIO SLAM – Full Stack# BTS SIO SLAM – Portfolio Professionnel
+# 🎓 Portfolio BTS SIO SLAM – Full Stack
 
+Portfolio professionnel développé dans le cadre du BTS SIO option SLAM. Application full-stack moderne avec React.js (front-end) et API REST PHP (back-end).
 
+**Dernière mise à jour :** 17 février 2026
 
-Portfolio professionnel développé dans le cadre du BTS SIO option SLAM. Application full-stack moderne avec React.js (front-end) et API REST PHP (back-end).## Structure du projet
+---
 
+## ✨ Fonctionnalités
 
+### Pages Publiques
+- **🏠 Accueil** - Présentation et vue d'ensemble
+- **💼 Projets** - Portfolio de projets organisés par catégories :
+  - 🏢 **Projets Professionnels** - Réalisations en entreprise (Capgemini, etc.)
+  - 🎓 **Projets Scolaires** - Travaux BTS SIO SLAM (PPE, projets pédagogiques)
+  - 💻 **Projets Personnels** - Développements individuels
+- **📡 Veille Technologique** - Articles organisés par type :
+  - 📧 **Veille automatique** - Newsletters, flux RSS, réseaux sociaux
+  - 💬 **Forums et communautés** - Discord, Stack Overflow, Dev.to, Reddit
+- **👤 À propos** - Parcours et compétences professionnelles
+- **📬 Contact** - Formulaire de contact
+- **📄 CV** - Curriculum vitae complet
 
----```
+### Administration Sécurisée
+- 🔐 Authentification avec protection CSRF
+- ✏️ Gestion complète des **projets** (CRUD avec catégories)
+- 📝 Gestion complète de la **veille** (CRUD avec catégories)
+- 👁️ Système de visibilité (afficher/masquer les contenus)
+- 🖼️ Upload et gestion d'images pour les projets
 
+---
+
+## 📁 Structure du Projet
+
+```
 /portfolio-fdme/
-
-## 📁 Structure du Projet│
-
-├── /client/      # Front-end React
-
-```├── /server/      # Back-end PHP sécurisé et autonome
-
-/portfolio-fdme/├── /database/    # Script SQL pour création tables
-
-│└── README.md
-
-├── /client/              # Application React (Front-end)```
-
+├── /client/              # Application React (Front-end)
 │   ├── /public/          # Fichiers statiques
-
-│   ├── /src/             # Code source React## Pré-requis
-
-│   │   ├── /api/         # Configuration et appels API- Node.js LTS + npm (Front)
-
-│   │   ├── /components/  # Composants React réutilisables- PHP 8.x (CLI ou serveur Apache/Nginx)
-
-│   │   ├── /context/     # Contextes React (AuthContext)- MariaDB / MySQL
-
-│   │   └── /pages/       # Pages de l'application
-
-│   └── package.json## Installation étape par étape
-
+│   │   ├── index.html
+│   │   ├── manifest.json
+│   │   └── robots.txt
+│   ├── /src/
+│   │   ├── /api/         # Configuration et appels API
+│   │   │   ├── config.js
+│   │   │   ├── projects.js
+│   │   │   └── veille.js
+│   │   ├── /components/  # Composants React réutilisables
+│   │   │   ├── Layout.js
+│   │   │   ├── ProjectCard.js
+│   │   │   ├── VeilleCard.js
+│   │   │   └── /admin/   # Composants d'administration
+│   │   │       ├── AddProjectForm.js
+│   │   │       ├── EditProjectForm.js
+│   │   │       ├── AddVeilleForm.js
+│   │   │       ├── EditVeilleForm.js
+│   │   │       ├── ProjectsAdmin.js
+│   │   │       └── VeilleAdmin.js
+│   │   ├── /context/     # Contextes React
+│   │   │   └── AuthContext.js
+│   │   ├── /pages/       # Pages de l'application
+│   │   │   ├── Home.js
+│   │   │   ├── Projects.js (3 catégories)
+│   │   │   ├── Veille.js (2 catégories)
+│   │   │   ├── About.js
+│   │   │   ├── Contact.js
+│   │   │   ├── CV.js
+│   │   │   ├── Technologies.js
+│   │   │   └── AdminPanel.js
+│   │   ├── App.js
+│   │   └── index.js
+│   └── package.json
 │
-
-├── /server/              # API REST PHP (Back-end)### 1. Créer la base de données MariaDB/MySQL
-
-│   ├── /api/             # Endpoints API REST- Connecte-toi à phpMyAdmin ou à ton outil SQL.
-
-│   │   ├── login.php           # Connexion admin- Crée une base nommée par exemple `bts_portfolio`.
-
-│   │   ├── logout.php          # Déconnexion
-
-│   │   ├── get_csrf.php        # Récupération token CSRF### 2. Importer le script SQL
-
-│   │   ├── check_session.php   # Vérification session- Sélectionne la base `bts_portfolio`.
-
-│   │   ├── get_projects.php    # Liste projets publics- Clique sur “Importer” et choisis le fichier `database/init.sql`.
-
-│   │   ├── get_all_projects.php # Tous les projets (admin)- Valide pour créer les tables (`admin`, `projects`, `veille`)
-
-│   │   ├── add_project.php     # Ajouter projet (admin)
-
-│   │   ├── update_project.php  # Modifier projet (admin)### 3. Configurer la connexion dans `server/config.php`
-
-│   │   ├── delete_project.php  # Supprimer projet (admin)- Mets à jour les variables `$DB_HOST`, `$DB_NAME`, `$DB_USER`, `$DB_PASS` selon tes accès MariaDB.
-
-│   │   ├── toggle_visibility.php # Changer visibilité (admin)
-
-│   │   ├── get_veille.php      # Articles veille publics### 4. Créer l’admin par défaut
-
-│   │   ├── get_all_veille.php  # Tous les articles (admin)- Place-toi dans le dossier `/server` sur ton hébergement ou en local.
-
-│   │   ├── add_veille.php      # Ajouter article (admin)- Lance le script `init_admin.php` dans le navigateur ou via la ligne de commande :
-
-│   │   ├── update_veille.php   # Modifier article (admin)  - Navigateur : `http://localhost/portfolio-fdme/server/init_admin.php`
-
-│   │   └── delete_veille.php   # Supprimer article (admin)  - Ligne de commande : `php init_admin.php`
-
-│   ├── config.php        # Configuration BDD + CORS- Un message “Admin créé : admin@admin.com / admin123” doit s’afficher.
-
+├── /server/              # API REST PHP (Back-end)
+│   ├── /api/             # Endpoints API REST
+│   │   ├── login.php, logout.php, check_session.php
+│   │   ├── get_csrf.php
+│   │   ├── get_projects.php       # Projets publics
+│   │   ├── get_all_projects.php   # Tous projets (admin)
+│   │   ├── add_project.php        # Ajouter projet (admin)
+│   │   ├── update_project.php     # Modifier projet (admin)
+│   │   ├── delete_project.php     # Supprimer projet (admin)
+│   │   ├── get_veille.php         # Veille publique
+│   │   ├── get_all_veille.php     # Toute veille (admin)
+│   │   ├── add_veille.php         # Ajouter veille (admin)
+│   │   ├── update_veille.php      # Modifier veille (admin)
+│   │   ├── delete_veille.php      # Supprimer veille (admin)
+│   │   └── toggle_visibility.php  # Visibilité (admin)
+│   ├── config.php        # Configuration BDD + CORS
 │   ├── csrf.php          # Gestion tokens CSRF
+│   └── init_admin.php    # Script d'installation admin
+│
+└── /database/            # Scripts SQL
+    ├── init.sql              # Structure des tables seules
+    ├── install_with_data.sql # Installation complète (structure + données)
+    ├── data_projects.sql     # Backup des projets
+    ├── data_veille.sql       # Backup de la veille
+    ├── install.bat / .ps1    # Scripts d'installation automatique
+    ├── backup.bat / .ps1     # Scripts de sauvegarde
+    └── README.md             # Documentation d'installation
+```
 
-│   └── init_admin.php    # Script d'installation (à utiliser une fois)### 5. Connexion admin
+---
 
-│- Utilise l’email `admin@admin.com` et le mot de passe `admin123` sur le site.
+## 🗄️ Structure de la Base de Données
 
-├── /database/            # Scripts SQL- Important: change ces identifiants immédiatement en production.
+### Table `admin`
+Comptes administrateurs avec authentification sécurisée (bcrypt).
 
-│   └── init.sql          # Schéma de la base de données
+| Colonne | Type | Description |
+|---------|------|-------------|
+| `id` | INT PRIMARY KEY AUTO_INCREMENT | Identifiant unique |
+| `email` | VARCHAR(255) UNIQUE | Email de connexion |
+| `password` | VARCHAR(255) | Hash bcrypt du mot de passe |
 
-│## Démarrage rapide (Dev)
+### Table `projects`
+Portfolio de projets avec **catégorisation**.
 
-└── README.md             # Ce fichier
+| Colonne | Type | Description |
+|---------|------|-------------|
+| `id` | INT PRIMARY KEY AUTO_INCREMENT | Identifiant unique |
+| `title` | VARCHAR(255) NOT NULL | Titre du projet |
+| `description` | TEXT NOT NULL | Description détaillée |
+| `image` | VARCHAR(255) | Chemin de l'image |
+| `github_link` | VARCHAR(255) | Lien GitHub |
+| `competencies` | TEXT | Compétences mobilisées |
+| **`category`** | **ENUM('pro', 'ecole', 'perso')** | **Catégorie du projet** |
+| `visible` | TINYINT DEFAULT 1 | Visibilité (0=masqué, 1=visible) |
+| `created_at` | TIMESTAMP DEFAULT CURRENT_TIMESTAMP | Date de création |
 
-```### Front-end (React)
+**Catégories de projets :**
+- `pro` - Projets professionnels (Capgemini, entreprises)
+- `ecole` - Projets scolaires (BTS SIO SLAM, PPE)
+- `perso` - Projets personnels
 
+### Table `veille`
+Articles de veille technologique avec **catégorisation**.
+
+| Colonne | Type | Description |
+|---------|------|-------------|
+| `id` | INT PRIMARY KEY AUTO_INCREMENT | Identifiant unique |
+| `title` | VARCHAR(255) NOT NULL | Titre de l'article |
+| `content` | TEXT NOT NULL | Contenu de l'article |
+| `url` | VARCHAR(255) | Lien source |
+| **`category`** | **ENUM('automatique', 'forum')** | **Type de veille** |
+| `visible` | TINYINT DEFAULT 1 | Visibilité (0=masqué, 1=visible) |
+| `created_at` | TIMESTAMP DEFAULT CURRENT_TIMESTAMP | Date de création |
+
+**Catégories de veille :**
+- `automatique` - Sources automatiques (newsletters, RSS, réseaux sociaux)
+- `forum` - Forums et communautés (Discord, Stack Overflow, Dev.to, Reddit)
+
+---
+
+## 🚀 Installation Rapide
+
+### Prérequis
+- ✅ **XAMPP** (ou Apache + PHP 8.x + MySQL/MariaDB)
+- ✅ **Node.js** LTS + npm
+- ✅ **Git** (optionnel)
+
+### Option 1 : Installation automatique avec données
+
+Cette méthode installe la structure ET les données de démo (projets et veilles).
+
+#### Windows
 ```bash
-
----cd client
-
-npm install
-
-## 🚀 Pré-requisnpm start
-
+cd database
+install.bat
 ```
 
-### Environnement de développement- Application: http://localhost:3000
-
-- **Node.js** 16+ et **npm** (pour React)- Proxy dev: `client/package.json` définit `"proxy": "http://localhost"`.
-
-- **PHP** 8.0+ (avec extensions PDO et PDO_MySQL)- Base API côté front: centralisée dans `client/src/api/config.js`.
-
-- **MySQL** ou **MariaDB** 10.4+  - Variable d'env: `REACT_APP_API_BASE` (facultatif)
-
-- **XAMPP**, **WAMP**, ou serveur Apache/Nginx (recommandé pour le développement)  - Valeur par défaut: `'/portfolio-fdme/server/api'`
-
-  - Exemples:
-
----    - Dev Apache/XAMPP: `REACT_APP_API_BASE=/portfolio-fdme/server/api`
-
-    - Dev serveur PHP intégré: `REACT_APP_API_BASE=http://127.0.0.1:8000/api`
-
-## ⚙️ Installation    - Prod domaine: `REACT_APP_API_BASE=/server/api` ou `https://exemple.com/server/api`
-
-
-
-### 1️⃣ Cloner le projet### Back-end (PHP)
-
-Option 1 — serveur PHP intégré:
-
-```bash```bash
-
-git clone https://github.com/warkozz/portfolio-fdme.gitphp -S 127.0.0.1:8000 -t server
-
-cd portfolio-fdme```
-
-```API disponible sur: `http://127.0.0.1:8000/api/*`
-
-
-
-### 2️⃣ Configuration de la base de donnéesOption 2 — WAMP/XAMPP/Apache:
-
-- Place le dossier `server/` sous le DocumentRoot (ou configure un VirtualHost).
-
-#### a) Créer la base de données- Accès API: `http://localhost/portfolio-fdme/server/api/*`
-
-
-
-Ouvrez **phpMyAdmin** ou votre client MySQL et exécutez :## Fonctionnalités principales
-
-- Portfolio React moderne, responsive
-
-```sql- Interface admin sécurisée (PHP, sessions, CSRF)
-
-CREATE DATABASE bts_portfolio CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;- API REST PHP autonome (CRUD projets & veille, upload image)
-
-```- Sécurité : validation, sanitation, CSRF, XSS, SQLi
-
-- Documentation complète et dépôt GitHub structuré
-
-#### b) Importer le schéma
-
-## API REST (liste)
-
-- Dans **phpMyAdmin**, sélectionnez la base `bts_portfolio`Base selon l’hébergement local: `http://localhost/portfolio-fdme/server/api` (Apache) ou `http://127.0.0.1:8000/api` (PHP intégré).
-
-- Cliquez sur **Importer**
-
-- Sélectionnez le fichier `database/init.sql`- `POST  /api/login.php` — login admin (JSON)
-
-- Cliquez sur **Exécuter**- `POST  /api/logout.php` — logout admin
-
-- `GET   /api/get_csrf.php` — obtenir token CSRF
-
-**Tables créées :**- `GET   /api/check_session.php` — vérifier session admin
-
-- `admin` : Comptes administrateurs- `GET   /api/get_projects.php` — projets publics
-
-- `projects` : Projets du portfolio- `GET   /api/get_all_projects.php` — tous projets (admin)
-
-- `veille` : Articles de veille technologique- `POST  /api/add_project.php` — ajouter projet (admin)
-
-- `POST  /api/update_project.php` — modifier projet (admin)
-
-### 3️⃣ Configuration du Back-end (PHP)- `POST  /api/delete_project.php` — supprimer projet (admin)
-
-- `POST  /api/toggle_visibility.php` — basculer visibilité projet (admin)
-
-#### a) Configurer la connexion à la base de données- `GET   /api/get_veille.php` — veille publique
-
-- `GET   /api/get_all_veille.php` — toute la veille (admin)
-
-Ouvrez `server/config.php` et vérifiez/modifiez les paramètres :- `POST  /api/add_veille.php` — ajouter veille (admin)
-
-- `POST  /api/update_veille.php` — modifier veille (admin)
-
-```php- `POST  /api/delete_veille.php` — supprimer veille (admin)
-
-$DB_HOST = 'localhost';      // Hôte MySQL
-
-$DB_NAME = 'bts_portfolio';  // Nom de la baseNotes:
-
-$DB_USER = 'root';           // Utilisateur MySQL- Les routes admin nécessitent une session valide + token CSRF (`get_csrf.php`).
-
-$DB_PASS = '';               // Mot de passe MySQL- Upload: vérifier les contraintes MIME/extension/taille dans le code avant envoi.
-
+#### PowerShell / Linux / macOS
+```bash
+cd database
+pwsh install.ps1
 ```
 
-## Sécurité
+Le script :
+1. Crée la base de données `bts_portfolio`
+2. Importe la structure et les données depuis `install_with_data.sql`
+3. Demande de créer un compte admin
 
-#### b) Créer le compte administrateur- Toutes les routes admin nécessitent une session valide et un token CSRF.
+### Option 2 : Installation manuelle
 
-- Validation/sanitation côté back et front.
+#### 1️⃣ Créer la base de données
 
-**Via le navigateur :**- Upload images sécurisé (taille, MIME, extension).
-
-1. Accédez à : `http://localhost/portfolio-fdme/server/init_admin.php`
-
-2. Remplissez le formulaire avec vos identifiants souhaités## Déploiement
-
-3. Cliquez sur **"🚀 Installer la base de données"**- Compatible hébergement PHP classique (MariaDB, OVH, 000WebHost, Infomaniak...)
-
-4. **Notez bien les identifiants affichés !**
-
-### Production — étapes
-
-**Ou via phpMyAdmin :**1) Base de données
-
-   - Créer la base sur l’hébergeur et importer `database/init.sql`.
+Ouvrez **phpMyAdmin** ou votre client MySQL :
 
 ```sql
+CREATE DATABASE bts_portfolio CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+```
 
-INSERT INTO admin (email, password) VALUES 2) Back-end PHP
+#### 2️⃣ Importer le schéma
 
-('admin@portfolio.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi');   - Déployer le dossier `server/` sur l’hébergement.
+**Pour une base vide (sans données) :**
+- Dans phpMyAdmin, sélectionnez `bts_portfolio`
+- Importez `database/init.sql`
 
-```   - Configurer `server/config.php` avec les accès BDD de prod.
+**Pour une base avec données de démo :**
+- Dans phpMyAdmin, sélectionnez `bts_portfolio`
+- Importez `database/install_with_data.sql` (contient 10 projets et 8 veilles)
 
-> Mot de passe par défaut : `password`   - Exécuter `server/init_admin.php` une fois, puis le supprimer ou le protéger.
+#### 3️⃣ Configurer la connexion
 
+Ouvrez `server/config.php` et vérifiez :
 
+```php
+$DB_HOST = 'localhost';      // Hôte MySQL
+$DB_NAME = 'bts_portfolio';  // Nom de la base
+$DB_USER = 'root';           // Utilisateur MySQL
+$DB_PASS = '';               // Mot de passe MySQL (vide par défaut sur XAMPP)
+```
 
-⚠️ **Important** : Après avoir créé l'admin, supprimez ou protégez `init_admin.php` !3) Front-end React
+#### 4️⃣ Créer le compte administrateur
+
+**Via le navigateur :**
+1. Accédez à : `http://localhost/portfolio-fdme/server/init_admin.php`
+2. Remplissez le formulaire avec vos identifiants
+3. Cliquez sur **"🚀 Installer la base de données"**
+4. **Notez bien les identifiants affichés !**
+
+**Ou via phpMyAdmin :**
+```sql
+INSERT INTO admin (email, password) VALUES 
+('admin@portfolio.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi');
+```
+> Mot de passe par défaut : `password`
+
+⚠️ **IMPORTANT** : Après création de l'admin, supprimez ou protégez `init_admin.php` !
+
+#### 5️⃣ Installer les dépendances React
 
 ```bash
-
-### 4️⃣ Installation du Front-end (React)cd client
-
+cd client
 npm install
+```
 
-```bashnpm run build
+---
 
-cd client```
+## 🖥️ Démarrage en Développement
 
-npm install   - Déployer le contenu de `client/build` (hébergement statique) ou le servir derrière Apache/Nginx.
+### Option A : XAMPP / WAMP (Recommandé)
 
-```   - Vérifier `REACT_APP_API_BASE` (voir `client/src/api/config.js`) pour coller à l'URL API de prod.
-
-
-
----4) Domaine et CORS
-
-   - Idéalement servir front et back sous le même domaine pour éviter CORS.
-
-## 🖥️ Démarrage en Développement   - Sinon, configurer CORS côté back et ajuster la base API côté front.
-
-
-
-### Option 1 : XAMPP / WAMP (Recommandé)## Conventions Git
-
-- Commits : `Feat/...`, `Fix/...`, `Docs/...`, etc.
-
-#### Back-end (PHP)- Push à chaque modification majeure.
-
-- Placez le projet dans `C:\xampp\htdocs\` (XAMPP) ou `C:\wamp64\www\` (WAMP)
-- Démarrez Apache et MySQL depuis le panneau de contrôle
-- L'API est accessible à : `http://localhost/portfolio-fdme/server/api/`
+#### Back-end (PHP)
+1. Placez le projet dans `C:\xampp\htdocs\` (XAMPP) ou `C:\wamp64\www\` (WAMP)
+2. Démarrez **Apache** et **MySQL** depuis le panneau de contrôle
+3. L'API est accessible à : `http://localhost/portfolio-fdme/server/api/`
 
 #### Front-end (React)
 ```bash
@@ -280,7 +253,7 @@ npm start
 - L'application s'ouvre automatiquement sur `http://localhost:3000`
 - Le proxy dans `package.json` redirige les appels API vers `http://localhost`
 
-### Option 2 : Serveur PHP intégré
+### Option B : Serveur PHP intégré
 
 #### Terminal 1 - Back-end (API PHP)
 ```bash
@@ -307,17 +280,19 @@ const API_BASE = process.env.REACT_APP_API_BASE || 'http://127.0.0.1:8000/api';
 ### Fonctionnalités implémentées
 - ✅ **Protection CSRF** : Tokens générés et vérifiés sur toutes les routes admin
 - ✅ **Sessions PHP sécurisées** : Authentification requise pour l'administration
-- ✅ **Validation des données** : Filtrage et échappement côté serveur
+- ✅ **Validation des données** : Filtrage et échappement côté serveur (catégories validées)
 - ✅ **Requêtes préparées** : Protection contre les injections SQL
 - ✅ **CORS configuré** : Autorisations limitées au domaine du front-end
 - ✅ **Upload sécurisé** : Validation des types MIME et extensions d'images
+- ✅ **Sanitization** : Nettoyage des entrées utilisateur avec `htmlspecialchars()`
 
 ### Recommandations de production
-1. Changez les identifiants admin par défaut
-2. Supprimez `server/init_admin.php` après installation
-3. Configurez HTTPS (certificat SSL)
-4. Limitez les permissions des dossiers d'upload
-5. Activez les logs d'erreur PHP mais désactivez leur affichage
+1. ⚠️ Changez les identifiants admin par défaut
+2. ⚠️ Supprimez `server/init_admin.php` après installation
+3. 🔒 Configurez HTTPS (certificat SSL)
+4. 📁 Limitez les permissions des dossiers d'upload
+5. 📊 Activez les logs d'erreur PHP mais désactivez leur affichage public
+6. 🛡️ Configurez un pare-feu applicatif (WAF)
 
 ---
 
@@ -327,28 +302,61 @@ const API_BASE = process.env.REACT_APP_API_BASE || 'http://127.0.0.1:8000/api';
 
 ### Endpoints publics
 
-| Méthode | Endpoint | Description |
-|---------|----------|-------------|
-| `GET` | `/get_projects.php` | Liste des projets visibles |
-| `GET` | `/get_veille.php` | Articles de veille visibles |
+| Méthode | Endpoint | Description | Retour |
+|---------|----------|-------------|--------|
+| `GET` | `/get_projects.php` | Liste des projets visibles | JSON array avec `category` |
+| `GET` | `/get_veille.php` | Articles de veille visibles | JSON array avec `category` |
+
+**Exemple de réponse projets :**
+```json
+[
+  {
+    "id": 1,
+    "title": "Processus Qualité Capgemini",
+    "description": "...",
+    "category": "pro",
+    "image": "...",
+    "github_link": "...",
+    "competencies": "...",
+    "created_at": "2024-01-15 10:30:00"
+  }
+]
+```
 
 ### Endpoints admin (authentification requise)
 
+#### Authentification
+
+| Méthode | Endpoint | Description | Body | Headers |
+|---------|----------|-------------|------|---------|
+| `POST` | `/login.php` | Connexion admin | `{email, password, csrf_token}` | - |
+| `POST` | `/logout.php` | Déconnexion | - | - |
+| `GET` | `/get_csrf.php` | Récupérer token CSRF | - | - |
+| `GET` | `/check_session.php` | Vérifier session | - | - |
+
+#### Gestion des projets
+
 | Méthode | Endpoint | Description | Body |
 |---------|----------|-------------|------|
-| `POST` | `/login.php` | Connexion admin | `{email, password, csrf_token}` |
-| `POST` | `/logout.php` | Déconnexion | - |
-| `GET` | `/get_csrf.php` | Récupérer token CSRF | - |
-| `GET` | `/check_session.php` | Vérifier session | - |
-| `GET` | `/get_all_projects.php` | Tous les projets | - |
-| `POST` | `/add_project.php` | Ajouter projet | `FormData` |
-| `POST` | `/update_project.php` | Modifier projet | `FormData` |
-| `POST` | `/delete_project.php` | Supprimer projet | `{id, csrf_token}` |
-| `POST` | `/toggle_visibility.php` | Visibilité projet | `{id, type, csrf_token}` |
-| `GET` | `/get_all_veille.php` | Tous les articles | - |
-| `POST` | `/add_veille.php` | Ajouter article | `{title, content, url, csrf_token}` |
-| `POST` | `/update_veille.php` | Modifier article | `{id, title, content, url, csrf_token}` |
-| `POST` | `/delete_veille.php` | Supprimer article | `{id, csrf_token}` |
+| `GET` | `/get_all_projects.php` | Tous les projets (y compris masqués) | - |
+| `POST` | `/add_project.php` | Ajouter un projet | `FormData: {title, description, category, image, github_link, competencies, csrf_token}` |
+| `POST` | `/update_project.php` | Modifier un projet | `FormData: {id, title, description, category, image, github_link, competencies, csrf_token}` |
+| `POST` | `/delete_project.php` | Supprimer un projet | `{id, csrf_token}` |
+| `POST` | `/toggle_visibility.php` | Basculer visibilité | `{id, type: 'project', csrf_token}` |
+
+**Catégories valides pour projets** : `'pro'`, `'ecole'`, `'perso'`
+
+#### Gestion de la veille
+
+| Méthode | Endpoint | Description | Body |
+|---------|----------|-------------|------|
+| `GET` | `/get_all_veille.php` | Tous les articles (y compris masqués) | - |
+| `POST` | `/add_veille.php` | Ajouter un article | `{title, content, url, category, csrf_token}` |
+| `POST` | `/update_veille.php` | Modifier un article | `{id, title, content, url, category, csrf_token}` |
+| `POST` | `/delete_veille.php` | Supprimer un article | `{id, csrf_token}` |
+| `POST` | `/toggle_visibility.php` | Basculer visibilité | `{id, type: 'veille', csrf_token}` |
+
+**Catégories valides pour veille** : `'automatique'`, `'forum'`
 
 ---
 
@@ -367,42 +375,109 @@ Le dossier `client/build/` contient les fichiers statiques optimisés.
 
 #### Sur un hébergement classique (OVH, Hostinger, etc.)
 
-1. **Base de données**
-   - Créez une base MySQL sur votre hébergeur
-   - Importez `database/init.sql`
-   - Créez l'admin via `init_admin.php`
+**1. Base de données**
+- Créez une base MySQL sur votre hébergeur
+- Importez `database/install_with_data.sql` (avec données) ou `database/init.sql` (sans données)
+- Créez l'admin via `init_admin.php` puis supprimez-le
 
-2. **Back-end**
-   - Uploadez le dossier `server/` via FTP
-   - Modifiez `server/config.php` avec vos identifiants de production
-   - Ajustez l'URL CORS si nécessaire
+**2. Back-end**
+- Uploadez le dossier `server/` via FTP
+- Modifiez `server/config.php` avec vos identifiants de production
+- Ajustez l'URL CORS si nécessaire dans `config.php` :
+```php
+$allowed_origins = ['https://votredomaine.com'];
+```
 
-3. **Front-end**
-   - Uploadez le contenu de `client/build/` dans le répertoire web
-   - Ou configurez un sous-domaine pour servir `build/`
+**3. Front-end**
+- Modifiez `client/src/api/config.js` pour pointer vers votre API de prod :
+```javascript
+const API_BASE = 'https://votredomaine.com/server/api';
+```
+- Rebuild le front-end : `npm run build`
+- Uploadez le contenu de `client/build/` dans le répertoire web
 
-4. **Configuration finale**
-   - Modifiez `client/src/api/config.js` pour pointer vers votre API de prod
-   - Exemple : `const API_BASE = 'https://votredomaine.com/server/api'`
-   - Rebuild le front-end : `npm run build`
+**4. Configuration finale**
+- Configurez un certificat SSL (Let's Encrypt recommandé)
+- Testez l'authentification et les endpoints API
+- Vérifiez que les catégories s'affichent correctement
 
 ---
 
 ## 🛠️ Technologies Utilisées
 
 ### Front-end
-- **React** 18 - Framework JavaScript
-- **React Router** - Navigation SPA
-- **Tailwind CSS** - Framework CSS utility-first
-- **Axios** - Requêtes HTTP
+- ⚛️ **React** 18 - Framework JavaScript
+- 🔀 **React Router** - Navigation SPA
+- 🎨 **Tailwind CSS** - Framework CSS utility-first
+- 🌐 **Axios** - Requêtes HTTP
+- 🔄 **Context API** - Gestion d'état (AuthContext)
 
 ### Back-end
-- **PHP** 8.0+ - Langage serveur
-- **PDO** - Accès base de données sécurisé
-- **Sessions PHP** - Gestion de l'authentification
+- 🐘 **PHP** 8.0+ - Langage serveur
+- 🗄️ **PDO** - Accès base de données sécurisé
+- 🔐 **Sessions PHP** - Gestion de l'authentification
+- 🛡️ **CSRF Protection** - Sécurité des formulaires
 
 ### Base de données
-- **MySQL** / **MariaDB** - Système de gestion de base de données
+- 🐬 **MySQL** / **MariaDB** 10.4+ - SGBD relationnel
+
+---
+
+## 💾 Sauvegarde des Données
+
+### Export automatique
+
+#### Windows
+```bash
+cd database
+backup.bat
+```
+
+#### PowerShell / Linux / macOS
+```bash
+cd database
+pwsh backup.ps1
+```
+
+Le script exporte :
+- `data_projects.sql` - Tous les projets avec catégories
+- `data_veille.sql` - Tous les articles avec catégories
+
+### Import des sauvegardes
+
+```sql
+-- Dans phpMyAdmin, sélectionnez la base et importez :
+source database/data_projects.sql;
+source database/data_veille.sql;
+```
+
+---
+
+## 🎯 Fonctionnalités des Catégories
+
+### Projets - 3 catégories
+
+**Interface publique** ([Projects.js](client/src/pages/Projects.js)) :
+- Section **"🏢 Projets Professionnels"** - Projets réalisés en entreprise
+- Section **"🎓 Projets Scolaires"** - Travaux académiques et PPE
+- Section **"💻 Projets Personnels"** - Développements individuels
+
+**Interface admin** ([AddProjectForm.js](client/src/components/admin/AddProjectForm.js), [EditProjectForm.js](client/src/components/admin/EditProjectForm.js)) :
+- Dropdown de sélection avec 3 options :
+  - `perso` - Projet personnel
+  - `ecole` - École / Formation
+  - `pro` - Professionnel
+
+### Veille - 2 catégories
+
+**Interface publique** ([Veille.js](client/src/pages/Veille.js)) :
+- Section **"📧 Veille automatique"** - Newsletters, RSS, réseaux sociaux
+- Section **"💬 Forums et communautés"** - Discord, Stack Overflow, Dev.to, Reddit
+
+**Interface admin** ([AddVeilleForm.js](client/src/components/admin/AddVeilleForm.js), [EditVeilleForm.js](client/src/components/admin/EditVeilleForm.js)) :
+- Dropdown de sélection avec 2 options :
+  - `automatique` - Veille automatique
+  - `forum` - Forum / Communauté
 
 ---
 
@@ -410,12 +485,24 @@ Le dossier `client/build/` contient les fichiers statiques optimisés.
 
 Ce projet est développé dans le cadre du BTS SIO SLAM. Les contributions sont les bienvenues !
 
-### Conventions Git
+### Workflow Git
+```bash
+git clone https://github.com/warkozz/portfolio-fdme.git
+git checkout -b feature/nouvelle-fonctionnalite
+# ... modifications ...
+git add .
+git commit -m "feat: description de la fonctionnalité"
+git push origin feature/nouvelle-fonctionnalite
+```
+
+### Conventions de commits
 - `feat: ...` - Nouvelle fonctionnalité
 - `fix: ...` - Correction de bug
 - `docs: ...` - Documentation
 - `style: ...` - Formatage du code
 - `refactor: ...` - Refactorisation
+- `test: ...` - Tests
+- `chore: ...` - Tâches de maintenance
 
 ---
 
@@ -427,8 +514,20 @@ Projet académique - BTS SIO SLAM
 
 ## 📧 Contact
 
-Pour toute question, contactez l'administrateur du projet.
+**Dépôt GitHub** : [warkozz/portfolio-fdme](https://github.com/warkozz/portfolio-fdme)
+
+Pour toute question relative au projet, n'hésitez pas à ouvrir une issue sur GitHub.
+
+---
+
+## 📚 Documentation Complémentaire
+
+- [HOW_TO_BACKUP.md](HOW_TO_BACKUP.md) - Guide de sauvegarde détaillé
+- [database/README.md](database/README.md) - Documentation des scripts d'installation
+- [CHANGELOG.md](CHANGELOG.md) - Historique des modifications
 
 ---
 
 **🎓 Projet BTS SIO SLAM - Portfolio Professionnel**
+
+*Développé avec ⚛️ React + 🐘 PHP + 🐬 MySQL*

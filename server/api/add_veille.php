@@ -21,18 +21,22 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 $title = trim($_POST['title'] ?? '');
 $content = trim($_POST['content'] ?? '');
 $url = trim($_POST['url'] ?? '');
+$category = trim($_POST['category'] ?? 'automatique');
 $csrf = $_POST['csrf_token'] ?? '';
 if (!$title || !$content) {
     http_response_code(400);
     echo json_encode(['error' => 'Champs title/content manquants']);
     exit;
 }
+if (!in_array($category, ['automatique', 'forum'])) {
+    $category = 'automatique';
+}
 if (!verify_csrf_token($csrf)) {
     http_response_code(400);
     echo json_encode(['error' => 'CSRF invalide']);
     exit;
 }
-$stmt = $pdo->prepare('INSERT INTO veille (title, content, url) VALUES (?, ?, ?)');
-$stmt->execute([$title, $content, $url]);
+$stmt = $pdo->prepare('INSERT INTO veille (title, content, url, category) VALUES (?, ?, ?, ?)');
+$stmt->execute([$title, $content, $url, $category]);
 echo json_encode(['success' => true]);
 ?>

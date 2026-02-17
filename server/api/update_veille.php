@@ -18,13 +18,17 @@ $id = intval($_POST['id'] ?? 0);
 $title = trim($_POST['title'] ?? '');
 $content = trim($_POST['content'] ?? '');
 $url = trim($_POST['url'] ?? '');
+$category = trim($_POST['category'] ?? 'automatique');
 $csrf = $_POST['csrf_token'] ?? '';
 if (!$id || !$title || !$content || !verify_csrf_token($csrf)) {
     http_response_code(400);
     echo json_encode(['error' => 'Champs manquants ou CSRF']);
     exit;
 }
-$stmt = $pdo->prepare('UPDATE veille SET title=?, content=?, url=? WHERE id=?');
-$stmt->execute([$title, $content, $url, $id]);
+if (!in_array($category, ['automatique', 'forum'])) {
+    $category = 'automatique';
+}
+$stmt = $pdo->prepare('UPDATE veille SET title=?, content=?, url=?, category=? WHERE id=?');
+$stmt->execute([$title, $content, $url, $category, $id]);
 echo json_encode(['success' => true]);
 ?>

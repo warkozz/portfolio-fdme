@@ -8,6 +8,7 @@ const EditProjectForm = ({ project, onUpdated, onCancel }) => {
   const [description, setDescription] = useState(project.description);
   const [github_link, setGithubLink] = useState(project.github_link || '');
   const [competencies, setCompetencies] = useState(project.competencies || '');
+  const [category, setCategory] = useState(project.category || 'perso');
   const [image, setImage] = useState(null);
   const [error, setError] = useState(null);
 
@@ -23,6 +24,7 @@ const EditProjectForm = ({ project, onUpdated, onCancel }) => {
       formData.append('description', description);
       formData.append('github_link', github_link);
       formData.append('competencies', competencies);
+      formData.append('category', category);
       formData.append('current_image', project.image || '');
       if (image) formData.append('image', image);
       formData.append('csrf_token', csrf_token);
@@ -39,6 +41,11 @@ const EditProjectForm = ({ project, onUpdated, onCancel }) => {
       <textarea value={description} onChange={e => setDescription(e.target.value)} className="border p-2" required />
       <input value={github_link} onChange={e => setGithubLink(e.target.value)} className="border p-2" />
       <input value={competencies} onChange={e => setCompetencies(e.target.value)} className="border p-2" />
+      <select value={category} onChange={e => setCategory(e.target.value)} className="border p-2">
+        <option value="perso">Projet personnel</option>
+        <option value="ecole">École / Formation</option>
+        <option value="pro">Professionnel</option>
+      </select>
       <input type="file" accept="image/*" onChange={e => setImage(e.target.files[0])} className="border p-2" />
       <div className="flex gap-2">
         <button type="submit" className="bg-blue-600 text-white p-2 rounded">Enregistrer</button>

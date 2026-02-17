@@ -120,7 +120,7 @@ const Layout = ({ children }) => {
         <div className="container max-w-6xl flex flex-col md:flex-row items-center justify-between py-6 text-sm">
           <div>© {new Date().getFullYear()} Portfolio Rayane – Tous droits réservés</div>
           <div className="flex gap-4 mt-2 md:mt-0">
-            <a href="#" className="hover:text-primary-700">GitHub</a>
+            <a href="https://github.com/warkozz" className="hover:text-primary-700" target="_blank" rel="noopener noreferrer">GitHub</a>
             <a href="https://www.linkedin.com/in/rayane-hakim-5849bb218/" className="hover:text-primary-700">Linkedin</a>
           </div>
         </div>
