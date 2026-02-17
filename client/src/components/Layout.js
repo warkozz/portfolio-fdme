@@ -9,15 +9,13 @@ const navLinkClass = ({ isActive }) =>
   }`;
 
 const Layout = ({ children }) => {
-  const [dark, setDark] = useState(false);
+  const [dark, setDark] = useState(() => {
+    const stored = localStorage.getItem('theme-dark');
+    if (stored !== null) return stored === '1';
+    return window.matchMedia('(prefers-color-scheme: dark)').matches;
+  });
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
-
-  useEffect(() => {
-    const stored = localStorage.getItem('theme-dark') === '1';
-    setDark(stored);
-    if (stored) document.documentElement.classList.add('dark');
-  }, []);
 
   useEffect(() => {
     if (dark) {

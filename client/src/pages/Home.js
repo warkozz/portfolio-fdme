@@ -30,7 +30,7 @@ const Home = () => {
 
   return (
   <Layout>
-    <section className="relative flex flex-col md:flex-row items-center justify-between mb-10 md:mb-16 overflow-hidden">
+    <section className="relative flex flex-col md:flex-row items-center justify-between mb-10 md:mb-16 overflow-visible px-4 md:px-0">
       {/* Decorative blurred background blobs */}
       <div className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute -top-16 -left-20 h-60 w-60 bg-primary-400/20 blur-3xl rounded-full" />
@@ -66,11 +66,26 @@ const Home = () => {
         </div>
       </div>
       <div className="flex-1 flex justify-center md:justify-end mt-8 md:mt-0">
-        <div className="relative w-48 h-48 md:w-56 md:h-56 rounded-full bg-gradient-to-tr from-primary-500/20 to-violet-500/20 ring-1 ring-primary-400/30 dark:ring-violet-400/30 shadow-2xl shadow-primary-500/10 backdrop-blur-sm flex items-center justify-center">
-          <svg width="88" height="88" viewBox="0 0 80 80" fill="none" aria-hidden>
-            <circle cx="40" cy="40" r="40" fill="#6366F1" />
-            <circle cx="40" cy="40" r="28" fill="#A5B4FC" />
-          </svg>
+        <div className="relative group">
+          {/* Card container matching site style */}
+          <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-3 transition-all duration-300 ease-out hover:shadow-xl hover:-translate-y-2 hover:border-primary-300 dark:hover:border-primary-600">
+            <div className="relative w-56 h-72 md:w-64 md:h-80 rounded-xl overflow-hidden">
+              <img 
+                src="/image.png" 
+                alt="HAKIM Rayane - Développeur BTS SIO SLAM"
+                className="w-full h-full object-cover object-center transition-transform duration-300 ease-out group-hover:scale-105"
+              />
+            </div>
+            
+            {/* Status badge */}
+            <div className="mt-3 flex items-center justify-center gap-2 py-2 px-4 bg-gray-50 dark:bg-gray-800 rounded-lg transition-colors duration-300 group-hover:bg-gray-100 dark:group-hover:bg-gray-700/50">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+              </span>
+              <span className="text-sm font-medium text-gray-900 dark:text-gray-100">Disponible</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
