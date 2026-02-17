@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Layout from '../components/Layout';
-import { Link } from 'react-router-dom';
+import Button from '../components/Button';
 
 const Home = () => {
   const [projCount, setProjCount] = useState(0);
@@ -29,8 +29,8 @@ const Home = () => {
   }, []);
 
   return (
-  <Layout>
-    <section className="relative flex flex-col md:flex-row items-center justify-between mb-10 md:mb-16 overflow-visible px-4 md:px-0">
+  <Layout containerSize="default">
+    <section className="relative flex flex-col md:flex-row items-center justify-between mb-10 md:mb-16 overflow-visible">
       {/* Decorative blurred background blobs */}
       <div className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute -top-16 -left-20 h-60 w-60 bg-primary-400/20 blur-3xl rounded-full" />
@@ -49,20 +49,21 @@ const Home = () => {
           React, Tailwind, PHP, MySQL • Alternance chez Capgemini • Objectif: construire des apps utiles et performantes.
         </p>
         <div className="flex flex-col sm:flex-row gap-3">
-          <Link
+          <Button
+            as="link"
             to="/projects"
-            className="inline-flex items-center justify-center px-6 py-3 bg-primary-600 text-white rounded-lg font-semibold shadow-soft hover:bg-primary-700 hover:shadow-lg transition focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
             aria-label="Découvrir mes projets"
           >
             Découvrir mes projets
-          </Link>
-          <Link
+          </Button>
+          <Button
+            as="link"
             to="/contact"
-            className="inline-flex items-center justify-center px-6 py-3 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 rounded-lg font-semibold hover:bg-gray-50 dark:hover:bg-gray-800 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
+            variant="secondary"
             aria-label="Me contacter"
           >
             Me contacter
-          </Link>
+          </Button>
         </div>
       </div>
       <div className="flex-1 flex justify-center md:justify-end mt-8 md:mt-0">
@@ -142,7 +143,7 @@ const Home = () => {
     </section>
     <section className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10">
       <div className="rounded-2xl p-[1px] bg-gradient-to-tr from-primary-500/30 via-violet-500/20 to-transparent hover:from-primary-500/60 hover:via-violet-500/40 transition">
-        <Link to="/projects" className="group bg-white dark:bg-gray-800 rounded-2xl shadow-soft p-6 flex flex-col items-start transition transform hover:-translate-y-1 hover:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500">
+        <Button as="link" to="/projects" variant="link" className="group bg-white dark:bg-gray-800 rounded-2xl shadow-soft p-6 flex flex-col items-start h-full transition transform hover:-translate-y-1 hover:shadow-lg">
           <div className="h-10 w-10 rounded-lg bg-primary-600/90 text-white grid place-items-center" aria-hidden>
             {/* Folder / Projects icon */}
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
@@ -150,11 +151,11 @@ const Home = () => {
             </svg>
           </div>
           <h2 className="font-bold text-lg mb-1 mt-3 text-gray-900 dark:text-white">Projets</h2>
-          <p className="text-sm text-gray-500">Découvrez mes projets réalisés durant ma formation.</p>
-        </Link>
+          <p className="text-sm text-gray-500 dark:text-gray-400">Découvrez mes projets réalisés durant ma formation et mon alternance.</p>
+        </Button>
       </div>
       <div className="rounded-2xl p-[1px] bg-gradient-to-tr from-primary-500/30 via-violet-500/20 to-transparent hover:from-primary-500/60 hover:via-violet-500/40 transition">
-        <Link to="/cv" className="group bg-white dark:bg-gray-800 rounded-2xl shadow-soft p-6 flex flex-col items-start transition transform hover:-translate-y-1 hover:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500">
+        <Button as="link" to="/cv" variant="link" className="group bg-white dark:bg-gray-800 rounded-2xl shadow-soft p-6 flex flex-col items-start h-full transition transform hover:-translate-y-1 hover:shadow-lg">
           <div className="h-10 w-10 rounded-lg bg-primary-600/90 text-white grid place-items-center" aria-hidden>
             {/* Document / CV icon */}
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
@@ -163,11 +164,11 @@ const Home = () => {
             </svg>
           </div>
           <h2 className="font-bold text-lg mb-1 mt-3 text-gray-900 dark:text-white">CV</h2>
-          <p className="text-sm text-gray-500">Téléchargez mon CV pour en savoir plus sur mon parcours.</p>
-        </Link>
+          <p className="text-sm text-gray-500 dark:text-gray-400">Téléchargez mon CV pour en savoir plus sur mon parcours professionnel.</p>
+        </Button>
       </div>
       <div className="rounded-2xl p-[1px] bg-gradient-to-tr from-primary-500/30 via-violet-500/20 to-transparent hover:from-primary-500/60 hover:via-violet-500/40 transition">
-        <Link to="/contact" className="group bg-white dark:bg-gray-800 rounded-2xl shadow-soft p-6 flex flex-col items-start transition transform hover:-translate-y-1 hover:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500">
+        <Button as="link" to="/contact" variant="link" className="group bg-white dark:bg-gray-800 rounded-2xl shadow-soft p-6 flex flex-col items-start h-full transition transform hover:-translate-y-1 hover:shadow-lg">
           <div className="h-10 w-10 rounded-lg bg-primary-600/90 text-white grid place-items-center" aria-hidden>
             {/* Phone / Contact icon */}
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
@@ -175,8 +176,8 @@ const Home = () => {
             </svg>
           </div>
           <h2 className="font-bold text-lg mb-1 mt-3 text-gray-900 dark:text-white">Contact</h2>
-          <p className="text-sm text-gray-500">N'hésitez pas à me contacter pour toute demande ou question.</p>
-        </Link>
+          <p className="text-sm text-gray-500 dark:text-gray-400">N'hésitez pas à me contacter pour toute demande ou question.</p>
+        </Button>
       </div>
     </section>
   </Layout>
