@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { fetchVeille } from '../api/veille';
 import VeilleCard from '../components/VeilleCard';
 import Layout from '../components/Layout';
+import PageTitle from '../components/PageTitle';
 
 const Veille = () => {
   const [veille, setVeille] = useState([]);
@@ -20,8 +21,8 @@ const Veille = () => {
   const veilleForum = veille.filter(v => v.category === 'forum');
 
   return (
-    <Layout>
-      <h1 className="text-4xl font-extrabold mb-8 text-gray-900 dark:text-white">Veille technologique</h1>
+    <Layout containerSize="default">
+      <PageTitle title="Veille technologique" />
       {loading && <div className="text-gray-500">Chargement...</div>}
       {error && <div className="text-red-500">{error}</div>}
       {!loading && !error && veille.length === 0 && (

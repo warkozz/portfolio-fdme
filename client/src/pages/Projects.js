@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Layout from '../components/Layout';
+import PageTitle from '../components/PageTitle';
 import axios from 'axios';
 
 // Base URL de l'API PHP (même que les composants admin)
@@ -55,8 +56,8 @@ const Projects = () => {
   );
 
   return (
-    <Layout>
-      <h1 className="text-4xl font-extrabold mb-8 text-gray-900 dark:text-white">Mes Projets</h1>
+    <Layout containerSize="default">
+      <PageTitle title="Mes Projets" />
       {loading ? (
         <div className="text-center text-gray-500">Chargement...</div>
       ) : projects.length === 0 ? (

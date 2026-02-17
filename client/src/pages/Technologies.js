@@ -1,5 +1,6 @@
 import React from 'react';
 import Layout from '../components/Layout';
+import PageTitle from '../components/PageTitle';
 
 const techGroups = [
   {
@@ -122,9 +123,9 @@ const TechCard = ({ name, logo }) => (
 );
 
 const Technologies = () => (
-  <Layout>
-    <div className="max-w-5xl mx-auto mt-12 px-4 md:px-0 space-y-10">
-      <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-gray-900 dark:text-white">Technologies</h1>
+  <Layout containerSize="default">
+    <div className="space-y-10">
+      <PageTitle title="Technologies" />
 
       {techGroups.map((group) => (
         <section key={group.title}>
