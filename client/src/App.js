@@ -8,6 +8,7 @@ import Technologies from './pages/Technologies';
 import CV from './pages/CV';
 import Contact from './pages/Contact';
 import AdminPanel from './pages/AdminPanel';
+import Copyright from './pages/Copyright';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
       <Route path="/cv" element={<CV />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/admin" element={<AdminPanel />} />
+      <Route path="/copyright" element={<Copyright />} />
     </Routes>
   );
 }
