@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import Layout from '../components/Layout';
 import PageTitle from '../components/PageTitle';
 import axios from 'axios';
@@ -11,6 +12,7 @@ const Projects = () => {
   usePageMeta('Projets', 'Découvrez les projets web et logiciels réalisés par Rayane Hakim.');
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { hash } = useLocation();
 
   useEffect(() => {
     axios.get(`${API_URL}/get_projects.php`)
@@ -21,13 +23,23 @@ const Projects = () => {
       .catch(() => setLoading(false));
   }, []);
 
+  // Scroll to anchor after projects have loaded
+  useEffect(() => {
+    if (!loading && hash) {
+      const el = document.querySelector(hash);
+      if (el) {
+        setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
+      }
+    }
+  }, [loading, hash]);
+
   // Filtrer les projets par catégorie
   const proProjects = projects.filter(p => p.category === 'pro');
   const ecoleProjects = projects.filter(p => p.category === 'ecole');
   const persoProjects = projects.filter(p => p.category === 'perso');
 
   const renderProject = (project) => (
-    <div key={project.id} className="bg-white dark:bg-gray-800 rounded-2xl shadow-soft p-6 flex flex-col">
+    <div key={project.id} id={`project-${project.id}`} className="bg-white dark:bg-gray-800 rounded-2xl shadow-soft p-6 flex flex-col scroll-mt-24 transition-all duration-300">
       <div className="mb-4">
         {project.image ? (
           <img src={project.image} alt={project.title} className="w-full h-36 object-cover rounded-lg" />
