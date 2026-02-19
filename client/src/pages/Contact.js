@@ -4,8 +4,10 @@ import * as Yup from 'yup';
 import Layout from '../components/Layout';
 import PageTitle from '../components/PageTitle';
 import Button from '../components/Button';
+import usePageMeta from '../hooks/usePageMeta';
 
 const Contact = () => {
+  usePageMeta('Contact', 'Contactez Rayane Hakim pour tout projet ou opportunité professionnelle.');
   const [status, setStatus] = useState({ type: 'idle', message: '' });
   const endpoint = useMemo(() => process.env.REACT_APP_CONTACT_ENDPOINT || '', []);
 

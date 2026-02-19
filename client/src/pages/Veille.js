@@ -3,8 +3,10 @@ import { fetchVeille } from '../api/veille';
 import VeilleCard from '../components/VeilleCard';
 import Layout from '../components/Layout';
 import PageTitle from '../components/PageTitle';
+import usePageMeta from '../hooks/usePageMeta';
 
 const Veille = () => {
+  usePageMeta('Veille technologique', 'Ma veille technologique – articles, découvertes et ressources sur le développement web.');
   const [veille, setVeille] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

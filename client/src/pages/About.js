@@ -1,8 +1,11 @@
 import React from 'react';
+import usePageMeta from '../hooks/usePageMeta';
 import Layout from '../components/Layout';
 import PageTitle from '../components/PageTitle';
 
-const About = () => (
+const About = () => {
+  usePageMeta('À propos', 'Parcours et profil de Rayane Hakim – reconversion en développement web, alternance chez Capgemini.');
+  return (
   <Layout containerSize="default">
     <div className="space-y-8">
       <PageTitle title="À propos" />
@@ -103,6 +106,7 @@ const About = () => (
       </div>
     </div>
   </Layout>
-);
+  );
+};
 
 export default About;
