@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import Layout from '../components/Layout';
 import PageTitle from '../components/PageTitle';
 import axios from 'axios';
+import usePageMeta from '../hooks/usePageMeta';
 
 // Base URL de l'API PHP (même que les composants admin)
 const API_URL = '/portfolio-fdme/server/api';
 
 const Projects = () => {
+  usePageMeta('Projets', 'Découvrez les projets web et logiciels réalisés par Rayane Hakim.');
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
 

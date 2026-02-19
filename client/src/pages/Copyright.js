@@ -1,4 +1,5 @@
 import React from 'react';
+import usePageMeta from '../hooks/usePageMeta';
 import Layout from '../components/Layout';
 
 const Section = ({ title, children }) => (
@@ -13,6 +14,7 @@ const Section = ({ title, children }) => (
 );
 
 const Copyright = () => {
+  usePageMeta('Mentions légales', 'Mentions légales, licence MIT et informations juridiques du portfolio de Rayane Hakim.');
   const year = new Date().getFullYear();
 
   return (

@@ -1,4 +1,5 @@
 import React from 'react';
+import usePageMeta from '../hooks/usePageMeta';
 import Layout from '../components/Layout';
 import PageTitle from '../components/PageTitle';
 
@@ -122,7 +123,9 @@ const TechCard = ({ name, logo }) => (
   </div>
 );
 
-const Technologies = () => (
+const Technologies = () => {
+  usePageMeta('Technologies', 'Stack technique de Rayane Hakim – React, Python, PHP, MySQL, Tailwind, Docker, AWS et plus.');
+  return (
   <Layout containerSize="default">
     <div className="space-y-10">
       <PageTitle title="Technologies" />
@@ -139,6 +142,7 @@ const Technologies = () => (
       ))}
     </div>
   </Layout>
-);
+  );
+};
 
 export default Technologies;

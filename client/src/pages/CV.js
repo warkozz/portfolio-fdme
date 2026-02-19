@@ -1,9 +1,12 @@
 import React from 'react';
+import usePageMeta from '../hooks/usePageMeta';
 import Layout from '../components/Layout';
 import PageTitle from '../components/PageTitle';
 import Button from '../components/Button';
 
-const CV = () => (
+const CV = () => {
+  usePageMeta('CV', 'Curriculum vitae de Rayane Hakim – développeur web en alternance chez Capgemini, BTS SIO SLAM.');
+  return (
   <Layout containerSize="default">
     {/* En-tête avec déco */}
     <section className="relative text-center mb-10 md:mb-14 overflow-hidden">
@@ -132,6 +135,7 @@ const CV = () => (
       </div>
     </section>
   </Layout>
-);
+  );
+};
 
 export default CV;
