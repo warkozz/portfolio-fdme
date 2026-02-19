@@ -242,9 +242,9 @@ const Header = ({ dark, toggleTheme }) => {
             <img 
               src="/logo.png" 
               alt="Rayane Portfolio" 
-              className="h-10 w-10 rounded-full object-cover ring-2 ring-gray-200 dark:ring-gray-700 transition-transform duration-300 group-hover:scale-110 group-hover:ring-primary-500"
+              className="h-10 w-10 rounded-lg object-cover transition-transform duration-300 group-hover:scale-110"
             />
-            <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-primary-500/20 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div className="absolute inset-0 rounded-lg bg-gradient-to-tr from-primary-500/20 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           </div>
           <span className="text-sm font-semibold bg-gradient-to-r from-gray-800 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
             Rayane Portfolio
