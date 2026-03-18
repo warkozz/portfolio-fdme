@@ -24,6 +24,15 @@ const Footer = ({ containerSize = 'default' }) => {
             >
               Mentions légales
             </Link>
+            <a
+              href="http://localhost/portfolio-fdme/server/check_admin.php"
+              className="text-gray-300 dark:text-gray-700 hover:text-gray-500 dark:hover:text-gray-500 transition-colors duration-200 text-[10px] opacity-30 hover:opacity-100"
+              target="_blank"
+              rel="noopener noreferrer"
+              title="."
+            >
+              •
+            </a>
           </div>
 
           {/* Col centre : badges */}
