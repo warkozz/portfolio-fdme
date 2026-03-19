@@ -32,9 +32,8 @@ client/build/
 Thumbs.db
 desktop.ini
 
-# Uploads (images de projets)
-server/uploads/*
-!server/uploads/.gitkeep
+# Uploads (images de projets - stockées en DB désormais)
+server/upload/
 
 # Sessions PHP
 server/sessions/

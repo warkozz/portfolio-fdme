@@ -37,7 +37,7 @@ const EditProjectForm = ({ project, onUpdated, onCancel }) => {
       
       if (onUpdated) onUpdated();
     } catch (err) {
-      setError(err.response?.data?.message || "Erreur lors de la modification");
+      setError(err.response?.data?.error || err.response?.data?.message || "Erreur lors de la modification");
     } finally {
       setLoading(false);
     }

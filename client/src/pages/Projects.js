@@ -3,6 +3,8 @@ import { useLocation } from 'react-router-dom';
 import Layout from '../components/Layout';
 import PageTitle from '../components/PageTitle';
 import axios from 'axios';
+import ProjectCard from '../components/ProjectCard';
+import { Link } from 'react-router-dom';
 import usePageMeta from '../hooks/usePageMeta';
 
 // Base URL de l'API PHP (même que les composants admin)
@@ -39,33 +41,8 @@ const Projects = () => {
   const persoProjects = projects.filter(p => p.category === 'perso');
 
   const renderProject = (project) => (
-    <div key={project.id} id={`project-${project.id}`} className="bg-white dark:bg-gray-800 rounded-2xl shadow-soft p-6 flex flex-col scroll-mt-24 transition-all duration-300">
-      <div className="mb-4">
-        {project.image ? (
-          <img src={project.image} alt={project.title} className="w-full h-36 object-cover rounded-lg" />
-        ) : (
-          <div className="w-full h-36 bg-primary-50 dark:bg-gray-700 rounded-lg flex items-center justify-center">
-            <svg width="64" height="64" fill="none" viewBox="0 0 24 24">
-              <rect width="24" height="24" rx="6" fill="#6366F1" />
-              <path d="M7 8h10v8H7V8z" fill="#fff" />
-            </svg>
-          </div>
-        )}
-      </div>
-      <h2 className="font-bold text-xl mb-1 text-gray-900 dark:text-white">{project.title}</h2>
-      <p className="text-gray-600 dark:text-gray-300 mb-4">{project.description}</p>
-      <div className="flex flex-wrap gap-2 mb-3">
-        {project.competencies && project.competencies.split(',').filter(Boolean).map((tech, idx) => (
-          <span key={idx} className="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 text-xs px-2 py-1 rounded-md">
-            {tech.trim()}
-          </span>
-        ))}
-      </div>
-      {project.github_link && (
-        <a href={project.github_link} target="_blank" rel="noopener noreferrer" className="text-primary-600 hover:underline text-sm mt-auto">
-          Voir sur GitHub
-        </a>
-      )}
+    <div key={project.id} id={`project-${project.id}`} className="scroll-mt-24 h-full">
+      <ProjectCard project={project} />
     </div>
   );
 
