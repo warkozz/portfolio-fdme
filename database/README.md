@@ -8,33 +8,21 @@ Ce dossier contient tous les fichiers nécessaires pour installer et maintenir l
 
 - **`install_with_data.sql`** ⭐ **RECOMMANDÉ**
   - Script complet qui crée la structure ET importe toutes les données
-  - Contient : tables + 10 projets + 8 articles de veille
+  - Contient : tables + projets + 5 fiches de veille thématiques BTS SIO
   - Usage : Installation complète en une seule commande
 
 - **`init.sql`**
   - Crée uniquement la structure des tables (sans données)
-  - Usage : Installation minimale sans contenu
+  - Usage : Installation minimale sans contenu, puis alimenter via l'admin
+
+- **`veille_seed.sql`**
+  - Insère uniquement les 5 fiches de veille (structure + analyse personnelle)
+  - Usage : Ré-alimenter la veille sur une base déjà initialisée via `init.sql`
 
 - **`install.bat`** 🪟 **Windows**
   - Script Windows pour installation automatique
   - Double-cliquez pour installer automatiquement
   - Vérifie MySQL, crée la base et importe les données
-
-### Fichiers de données (backups)
-
-- **`data_projects.sql`**
-  - Export de tous les projets existants
-  - Format : mysqldump standard
-
-- **`data_veille.sql`**
-  - Export de tous les articles de veille
-  - Format : mysqldump standard
-
-### Migrations
-
-- **`migration_add_category.sql`**
-  - Ajoute le champ `category` à la table veille
-  - À exécuter sur une base existante pour la mise à jour
 
 ---
 
@@ -67,26 +55,24 @@ Le script va :
 # Créer la base
 mysql -u root -e "CREATE DATABASE bts_portfolio CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
 
-# Importer les données
-mysql -u root bts_portfolio < database/install_with_data.sql
+# Importer structure + données (depuis le dossier racine du projet)
+mysql -u root bts_portfolio -e "source database/install_with_data.sql"
 ```
+
+> ⚠️ Utiliser `source` (pas la redirection `<`) pour éviter les problèmes d'encodage UTF-8 sous Windows.
 
 ---
 
 ## 🔄 Mise à jour des données (backup)
 
-Si vous avez ajouté de nouveaux projets ou articles de veille et souhaitez sauvegarder :
+Utiliser le script PowerShell inclus :
 
 ```bash
-# Sauvegarder les projets
-cd C:\xampp\mysql\bin
-.\mysqldump.exe -u root --no-create-info --complete-insert --skip-extended-insert bts_portfolio projects > C:\xampp\htdocs\portfolio-fdme\database\data_projects.sql
-
-# Sauvegarder la veille
-.\mysqldump.exe -u root --no-create-info --complete-insert --skip-extended-insert bts_portfolio veille > C:\xampp\htdocs\portfolio-fdme\database\data_veille.sql
+cd database
+.\backup.ps1
 ```
 
-Ensuite, mettez à jour `install_with_data.sql` avec les nouvelles données.
+Ou voir `HOW_TO_BACKUP.md` pour les instructions détaillées.
 
 ---
 
@@ -123,8 +109,8 @@ SELECT category, COUNT(*) FROM veille GROUP BY category;
 
 Vous devriez voir :
 - 3 tables (admin, projects, veille)
-- 10 projets
-- 8 articles de veille (4 automatiques + 4 forums)
+- Les projets importés
+- 5 fiches de veille thématiques BTS SIO SLAM
 
 ---
 
@@ -154,34 +140,19 @@ ALTER DATABASE bts_portfolio CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 ## 📦 Contenu des données
 
-### Projets (10)
-1. Logiciel Gestion Conseil de classe
-2. Application Logiciel Gestion Five 5v5
-3. Application Gestion de projet
-4. Application Web Zoo Arcadia
-5. Développeur R&D Python/IA – AuditGen AI (Capgemini)
-6. Développeur Web – AuditGen AI (Capgemini)
-7. Développeur Mobile React – Protectiv Pint (Capgemini)
-8. PPE MediaWiki - Installation et Documentation
-9. Site Vitrine BTP - Rénovation Salles de Sport
-10. Football Manager 5V5 - Extension Web
+### Veille technologique (5 fiches thématiques BTS SIO SLAM)
+1. React 19 : les Server Components en production — *août 2025*
+2. IA Générative & Prompt Engineering — retour AuditGen AI (Capgemini) — *sept. 2025*
+3. Sécurité des API REST : JWT, CORS et protection contre les injections — *oct. 2025*
+4. React et Next.js : SSR, SSG et App Router — *nov. 2025*
+5. Architecture microservices vs monolithique — expérience FastAPI — *janv. 2026*
 
-### Veille automatique (4)
-- Newsletters et alertes email
-- Agrégation de flux RSS (Feedly)
-- Réseaux sociaux (Twitter, Reddit, TikTok, Instagram)
-- Newsletters internes Capgemini
-
-### Forums et communautés (4)
-- Discord
-- Stack Overflow
-- Dev.to et Hashnode
-- Microsoft Teams
+Chaque fiche contient : informations collectées (`content`) + analyse personnelle liée aux projets réels (`analysis`).
 
 ---
 
 ## ⚠️ Important
 
-- Les fichiers `data_projects.sql` et `data_veille.sql` sont des backups bruts (générés par mysqldump)
-- Le fichier `install_with_data.sql` est le script optimisé à utiliser pour l'installation
-- Pensez à mettre à jour `install_with_data.sql` après chaque modification importante de vos données
+- Le fichier `install_with_data.sql` est le script complet à utiliser pour toute installation fraîche
+- `veille_seed.sql` permet de ré-insérer uniquement la veille (ex : après un `init.sql`)
+- Penser à mettre à jour `install_with_data.sql` après chaque modification importante des données

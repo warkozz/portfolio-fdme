@@ -20,6 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 $title = trim($_POST['title'] ?? '');
 $content = trim($_POST['content'] ?? '');
+$analysis = trim($_POST['analysis'] ?? '');
 $url = trim($_POST['url'] ?? '');
 $category = trim($_POST['category'] ?? 'automatique');
 $csrf = $_POST['csrf_token'] ?? '';
@@ -36,7 +37,7 @@ if (!verify_csrf_token($csrf)) {
     echo json_encode(['error' => 'CSRF invalide']);
     exit;
 }
-$stmt = $pdo->prepare('INSERT INTO veille (title, content, url, category) VALUES (?, ?, ?, ?)');
-$stmt->execute([$title, $content, $url, $category]);
+$stmt = $pdo->prepare('INSERT INTO veille (title, content, analysis, url, category) VALUES (?, ?, ?, ?, ?)');
+$stmt->execute([$title, $content, $analysis ?: null, $url, $category]);
 echo json_encode(['success' => true]);
 ?>

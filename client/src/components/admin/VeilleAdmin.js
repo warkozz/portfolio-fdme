@@ -91,9 +91,17 @@ const VeilleAdmin = () => {
                         <CategoryBadge category={v.category} colorMap={categoryColors} />
                         <VisibilityBadge visible={v.visible} />
                       </div>
-                      <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-3 mb-3">
+                      <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-2 mb-1">
                         {v.content}
                       </p>
+                      {v.analysis && (
+                        <p className="text-xs text-primary-700 dark:text-primary-400 line-clamp-1 mb-3 italic">
+                          📊 {v.analysis}
+                        </p>
+                      )}
+                      {!v.analysis && (
+                        <p className="text-xs text-amber-500 dark:text-amber-400 mb-3">⚠️ Analyse personnelle non renseignée</p>
+                      )}
                       {v.url && (
                         <a href={v.url} target="_blank" rel="noopener noreferrer" className="text-sm text-primary-600 dark:text-primary-400 hover:underline inline-flex items-center">
                           <svg className="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
