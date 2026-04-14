@@ -1,158 +1,86 @@
-# 📁 Scripts d'Installation de la Base de Données
+# 📁 Base de Données — Portfolio BTS SIO
 
-Ce dossier contient tous les fichiers nécessaires pour installer et maintenir la base de données du portfolio.
+## ⚡ Installation rapide (méthode recommandée)
 
-## 📋 Fichiers disponibles
+### Prérequis
+- XAMPP démarré (Apache + MySQL)
+- PHP disponible (`C:\xampp\php\php.exe`)
 
-### Scripts d'installation
+### Une seule commande à lancer :
 
-- **`install_with_data.sql`** ⭐ **RECOMMANDÉ**
-  - Script complet qui crée la structure ET importe toutes les données
-  - Contient : tables + projets + 5 fiches de veille thématiques BTS SIO
-  - Usage : Installation complète en une seule commande
+```powershell
+& "C:\xampp\php\php.exe" "C:\xampp\htdocs\portfolio-fdme\database\restore.php"
+```
 
-- **`init.sql`**
-  - Crée uniquement la structure des tables (sans données)
-  - Usage : Installation minimale sans contenu, puis alimenter via l'admin
+C'est tout. Le script :
+1. Supprime l'ancienne base si elle existe
+2. Recrée `bts_portfolio` en utf8mb4
+3. Insère les 10 projets, 5 articles de veille et le compte admin
+4. Affiche un résumé
 
-- **`veille_seed.sql`**
-  - Insère uniquement les 5 fiches de veille (structure + analyse personnelle)
-  - Usage : Ré-alimenter la veille sur une base déjà initialisée via `init.sql`
-
-- **`install.bat`** 🪟 **Windows**
-  - Script Windows pour installation automatique
-  - Double-cliquez pour installer automatiquement
-  - Vérifie MySQL, crée la base et importe les données
+**Identifiants admin par défaut :**
+- Email : `admin@portfolio.com`
+- Mot de passe : `admin123`
 
 ---
 
-## 🚀 Installation Rapide
+## 📋 Fichiers du dossier
 
-### Méthode 1 : Script automatique (Recommandé pour Windows)
-
-```bash
-cd database
-install.bat
-```
-
-Le script va :
-1. Vérifier que MySQL est démarré
-2. Créer la base `bts_portfolio`
-3. Importer structure + données
-4. Afficher un résumé
-
-### Méthode 2 : Manuelle via phpMyAdmin
-
-1. Ouvrir phpMyAdmin : http://localhost/phpmyadmin
-2. Créer une nouvelle base : `bts_portfolio`
-3. Onglet "Importer"
-4. Sélectionner `install_with_data.sql`
-5. Cliquer sur "Exécuter"
-
-### Méthode 3 : Ligne de commande MySQL
-
-```bash
-# Créer la base
-mysql -u root -e "CREATE DATABASE bts_portfolio CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
-
-# Importer structure + données (depuis le dossier racine du projet)
-mysql -u root bts_portfolio -e "source database/install_with_data.sql"
-```
-
-> ⚠️ Utiliser `source` (pas la redirection `<`) pour éviter les problèmes d'encodage UTF-8 sous Windows.
+| Fichier | Rôle |
+|---|---|
+| `restore.php` | ⭐ Script d'installation principal (recommandé) |
+| `install_with_data.sql` | Dump SQL de référence (sauvegarde) |
+| `init.sql` | Structure des tables uniquement (sans données) |
+| `veille_seed.sql` | Données de veille uniquement |
+| `backup.ps1` | Script de sauvegarde automatique |
+| `HOW_TO_BACKUP.md` | Instructions de sauvegarde |
 
 ---
 
-## 🔄 Mise à jour des données (backup)
+## 🔄 Lancer le projet complet
 
-Utiliser le script PowerShell inclus :
+1. **Démarrer XAMPP** (Apache + MySQL)
+2. **Restaurer la BDD** :
+   ```powershell
+   & "C:\xampp\php\php.exe" "C:\xampp\htdocs\portfolio-fdme\database\restore.php"
+   ```
+3. **Démarrer le front React** :
+   ```powershell
+   cd C:\xampp\htdocs\portfolio-fdme\client
+   npm start
+   ```
+4. Ouvrir **http://localhost:3000**
 
-```bash
-cd database
+---
+
+## 🔄 Sauvegarder les données
+
+```powershell
+cd C:\xampp\htdocs\portfolio-fdme\database
 .\backup.ps1
 ```
 
-Ou voir `HOW_TO_BACKUP.md` pour les instructions détaillées.
-
----
-
-## 📝 Après l'installation
-
-### Créer un compte administrateur
-
-```bash
-cd server
-php init_admin.php
-```
-
-Suivez les instructions pour créer votre compte admin.
-
-### Vérifier l'installation
-
-Connectez-vous à phpMyAdmin et vérifiez :
-
-```sql
-USE bts_portfolio;
-
--- Vérifier les tables
-SHOW TABLES;
-
--- Compter les projets
-SELECT COUNT(*) FROM projects;
-
--- Compter les articles de veille
-SELECT COUNT(*) FROM veille;
-
--- Vérifier les catégories de veille
-SELECT category, COUNT(*) FROM veille GROUP BY category;
-```
-
-Vous devriez voir :
-- 3 tables (admin, projects, veille)
-- Les projets importés
-- 5 fiches de veille thématiques BTS SIO SLAM
+> Voir `HOW_TO_BACKUP.md` pour les détails. Penser à mettre à jour `restore.php` après avoir ajouté des projets importants via l'admin.
 
 ---
 
 ## 🔧 Dépannage
 
-### Erreur : "Table already exists"
+**MySQL ne démarre pas** → Ouvrir XAMPP Control Panel et démarrer MySQL.
 
-```sql
-DROP DATABASE bts_portfolio;
-CREATE DATABASE bts_portfolio;
--- Puis relancer l'installation
-```
+**Erreur de connexion PDO** → Vérifier que MySQL tourne bien sur le port 3306.
 
-### Erreur : "MySQL not running"
-
-Ouvrez XAMPP Control Panel et démarrez MySQL.
-
-### Problème d'encodage (caractères bizarres)
-
-Vérifiez que la base utilise utf8mb4 :
-
-```sql
-ALTER DATABASE bts_portfolio CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-```
+**Caractères bizarres à l'affichage** → La BDD doit être en utf8mb4. Relancer `restore.php` qui recrée tout proprement.
 
 ---
 
-## 📦 Contenu des données
+## 📦 Données incluses
 
-### Veille technologique (5 fiches thématiques BTS SIO SLAM)
-1. React 19 : les Server Components en production — *août 2025*
-2. IA Générative & Prompt Engineering — retour AuditGen AI (Capgemini) — *sept. 2025*
-3. Sécurité des API REST : JWT, CORS et protection contre les injections — *oct. 2025*
+**10 projets** répartis en 3 catégories (pro / ecole / perso) incluant Capgemini, BTS SIO SLAM, projets personnels.
+
+**5 articles de veille thématiques BTS SIO SLAM :**
+1. React 19 : Server Components en production — *août 2025*
+2. IA Générative & Prompt Engineering (Capgemini) — *sept. 2025*
+3. Sécurité des API REST : JWT, CORS, injections — *oct. 2025*
 4. React et Next.js : SSR, SSG et App Router — *nov. 2025*
-5. Architecture microservices vs monolithique — expérience FastAPI — *janv. 2026*
-
-Chaque fiche contient : informations collectées (`content`) + analyse personnelle liée aux projets réels (`analysis`).
-
----
-
-## ⚠️ Important
-
-- Le fichier `install_with_data.sql` est le script complet à utiliser pour toute installation fraîche
-- `veille_seed.sql` permet de ré-insérer uniquement la veille (ex : après un `init.sql`)
-- Penser à mettre à jour `install_with_data.sql` après chaque modification importante des données
+5. Architecture microservices vs monolithique (FastAPI) — *janv. 2026*
