@@ -7,6 +7,7 @@ const API_URL = '/portfolio-fdme/server/api';
 const EditVeilleForm = ({ veille, onUpdated, onCancel }) => {
   const [title, setTitle] = useState(veille.title);
   const [content, setContent] = useState(veille.content);
+  const [analysis, setAnalysis] = useState(veille.analysis || '');
   const [url, setUrl] = useState(veille.url || '');
   const [category, setCategory] = useState(veille.category || 'automatique');
   const [error, setError] = useState(null);
@@ -24,6 +25,7 @@ const EditVeilleForm = ({ veille, onUpdated, onCancel }) => {
       body.append('id', String(veille.id));
       body.append('title', title);
       body.append('content', content);
+      body.append('analysis', analysis);
       body.append('url', url);
       body.append('category', category);
       body.append('csrf_token', csrf_token);
@@ -72,6 +74,18 @@ const EditVeilleForm = ({ veille, onUpdated, onCancel }) => {
           onChange={e => setContent(e.target.value)}
           className={`${inputClass} min-h-[120px] resize-y`}
           required
+        />
+      </div>
+
+      <div>
+        <label className={labelClass}>
+          Analyse personnelle & lien avec mes projets
+        </label>
+        <textarea
+          value={analysis}
+          onChange={e => setAnalysis(e.target.value)}
+          placeholder="Avantages / limites observés, lien direct avec un projet, votre avis..."
+          className={`${inputClass} min-h-[120px] resize-y`}
         />
       </div>
 

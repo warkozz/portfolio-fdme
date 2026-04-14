@@ -7,6 +7,7 @@ const API_URL = '/portfolio-fdme/server/api';
 const AddVeilleForm = ({ onAdded }) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [analysis, setAnalysis] = useState('');
   const [url, setUrl] = useState('');
   const [category, setCategory] = useState('automatique');
   const [error, setError] = useState(null);
@@ -25,6 +26,7 @@ const AddVeilleForm = ({ onAdded }) => {
       const body = new URLSearchParams();
       body.append('title', title);
       body.append('content', content);
+      body.append('analysis', analysis);
       body.append('url', url);
       body.append('category', category);
       body.append('csrf_token', csrf_token);
@@ -34,9 +36,10 @@ const AddVeilleForm = ({ onAdded }) => {
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
       });
       
-      setTitle(''); 
-      setContent(''); 
-      setUrl(''); 
+      setTitle('');
+      setContent('');
+      setAnalysis('');
+      setUrl('');
       setCategory('automatique');
       setSuccess(true);
       
@@ -78,9 +81,21 @@ const AddVeilleForm = ({ onAdded }) => {
         <textarea
           value={content}
           onChange={e => setContent(e.target.value)}
-          placeholder="Décrivez le contenu de votre veille..."
+          placeholder="Informations collectées : articles, nouveautés, comparaisons..."
           className={`${inputClass} min-h-[120px] resize-y`}
           required
+        />
+      </div>
+
+      <div>
+        <label className={labelClass}>
+          Analyse personnelle & lien avec vos projets
+        </label>
+        <textarea
+          value={analysis}
+          onChange={e => setAnalysis(e.target.value)}
+          placeholder="Avantages / limites observés, lien direct avec un projet (AuditGen AI, FootAPI...), votre avis..."
+          className={`${inputClass} min-h-[120px] resize-y`}
         />
       </div>
 

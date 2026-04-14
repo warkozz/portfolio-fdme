@@ -17,6 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 $id = intval($_POST['id'] ?? 0);
 $title = trim($_POST['title'] ?? '');
 $content = trim($_POST['content'] ?? '');
+$analysis = trim($_POST['analysis'] ?? '');
 $url = trim($_POST['url'] ?? '');
 $category = trim($_POST['category'] ?? 'automatique');
 $csrf = $_POST['csrf_token'] ?? '';
@@ -28,7 +29,7 @@ if (!$id || !$title || !$content || !verify_csrf_token($csrf)) {
 if (!in_array($category, ['automatique', 'forum'])) {
     $category = 'automatique';
 }
-$stmt = $pdo->prepare('UPDATE veille SET title=?, content=?, url=?, category=? WHERE id=?');
-$stmt->execute([$title, $content, $url, $category, $id]);
+$stmt = $pdo->prepare('UPDATE veille SET title=?, content=?, analysis=?, url=?, category=? WHERE id=?');
+$stmt->execute([$title, $content, $analysis ?: null, $url, $category, $id]);
 echo json_encode(['success' => true]);
 ?>

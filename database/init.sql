@@ -22,6 +22,7 @@ CREATE TABLE veille (
   id INT PRIMARY KEY AUTO_INCREMENT,
   title VARCHAR(255) NOT NULL,
   content TEXT NOT NULL,
+  analysis TEXT NULL,
   url VARCHAR(255),
   category ENUM('automatique', 'forum') DEFAULT 'automatique',
   visible BOOLEAN DEFAULT TRUE,
