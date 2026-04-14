@@ -11,6 +11,7 @@ import Contact from './pages/Contact';
 import AdminPanel from './pages/AdminPanel';
 import Copyright from './pages/Copyright';
 import NotFound from './pages/NotFound';
+import ProjectDetail from './pages/ProjectDetail';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/projects" element={<Projects />} />
+        <Route path="/projects/:id" element={<ProjectDetail />} />
         <Route path="/veille" element={<Veille />} />
         <Route path="/about" element={<About />} />
         <Route path="/technologies" element={<Technologies />} />

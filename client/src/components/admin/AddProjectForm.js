@@ -45,7 +45,7 @@ const AddProjectForm = ({ onAdded }) => {
       
       if (onAdded) onAdded();
     } catch (err) {
-      setError(err.response?.data?.message || 'Erreur lors de l\'ajout du projet');
+      setError(err.response?.data?.error || err.response?.data?.message || 'Erreur lors de l\'ajout du projet');
     } finally {
       setLoading(false);
     }

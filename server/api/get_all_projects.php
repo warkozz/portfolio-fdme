@@ -8,7 +8,7 @@ if (!isset($_SESSION['admin'])) {
     echo json_encode(['error' => 'Non autorisé']);
     exit;
 }
-$stmt = $pdo->prepare('SELECT * FROM projects ORDER BY created_at DESC');
+$stmt = $pdo->prepare('SELECT id, title, description, image, image_base64, image_mime, github_link, competencies, category, visible, created_at FROM projects ORDER BY created_at DESC');
 $stmt->execute();
 echo json_encode($stmt->fetchAll());
 ?>
