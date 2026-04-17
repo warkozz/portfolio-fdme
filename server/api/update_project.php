@@ -24,6 +24,7 @@ $id = intval($_POST['id'] ?? 0);
 $title = trim($_POST['title'] ?? '');
 $description = trim($_POST['description'] ?? '');
 $github_link = trim($_POST['github_link'] ?? '');
+$live_link = trim($_POST['live_link'] ?? '');
 $competencies = trim($_POST['competencies'] ?? '');
 $category = trim($_POST['category'] ?? 'perso');
 $csrf = $_POST['csrf_token'] ?? '';
@@ -75,11 +76,11 @@ if (!in_array($category, ['pro', 'ecole', 'perso'])) {
 }
 // Mise à jour avec ou sans nouvelle image
 if ($imageBase64 !== null) {
-    $stmt = $pdo->prepare('UPDATE projects SET title=?, description=?, github_link=?, competencies=?, category=?, image_base64=?, image_mime=? WHERE id=?');
-    $stmt->execute([$title, $description, $github_link, $competencies, $category, $imageBase64, $imageMime, $id]);
+    $stmt = $pdo->prepare('UPDATE projects SET title=?, description=?, github_link=?, live_link=?, competencies=?, category=?, image_base64=?, image_mime=? WHERE id=?');
+    $stmt->execute([$title, $description, $github_link, $live_link, $competencies, $category, $imageBase64, $imageMime, $id]);
 } else {
-    $stmt = $pdo->prepare('UPDATE projects SET title=?, description=?, github_link=?, competencies=?, category=? WHERE id=?');
-    $stmt->execute([$title, $description, $github_link, $competencies, $category, $id]);
+    $stmt = $pdo->prepare('UPDATE projects SET title=?, description=?, github_link=?, live_link=?, competencies=?, category=? WHERE id=?');
+    $stmt->execute([$title, $description, $github_link, $live_link, $competencies, $category, $id]);
 }
 echo json_encode(['success' => true]);
 ?>

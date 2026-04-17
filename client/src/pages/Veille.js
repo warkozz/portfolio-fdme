@@ -6,12 +6,12 @@ import PageTitle from '../components/PageTitle';
 import usePageMeta from '../hooks/usePageMeta';
 
 const TOOLS = [
-  { name: 'Feedly', desc: "Agrégateur RSS — je suis les blogs officiels (React, MDN, OWASP…) pour recevoir les nouveautés automatiquement.", icon: '📰' },
-  { name: 'Google Alerts', desc: "Alertes e-mail sur des mots-clés (\"React 2025\", \"faille PHP\", \"API REST sécurité\") pour ne rien manquer.", icon: '🔔' },
-  { name: 'GitHub Trending', desc: "Page Trending de GitHub pour découvrir les dépôts populaires du moment par langage (JavaScript, Python…).", icon: '⭐' },
-  { name: 'Stack Overflow', desc: "Lecture des discussions sur les nouveautés et bonnes pratiques, notamment les questions les plus votées.", icon: '💬' },
-  { name: 'LinkedIn', desc: "Suivi des ingénieurs et entreprises du secteur pour voir les retours d'expérience et tendances professionnelles.", icon: '🔗' },
-  { name: 'MDN / doc officielle', desc: "Consultation systématique des docs officielles (MDN, React.dev, PHP.net) pour valider les informations collectées.", icon: '📖' },
+  { name: 'Feedly', desc: "Agrégateur RSS — je suis les blogs officiels (React, MDN, OWASP…) pour recevoir les nouveautés automatiquement.", icon: '📰', url: 'https://feedly.com/i/my/me' },
+  { name: 'Google Alerts', desc: "Alertes e-mail sur des mots-clés (\"React 2025\", \"faille PHP\", \"API REST sécurité\") pour ne rien manquer.", icon: '🔔', url: 'https://www.google.com/alerts' },
+  { name: 'GitHub Trending', desc: "Page Trending de GitHub pour découvrir les dépôts populaires du moment par langage (JavaScript, Python…).", icon: '⭐', url: 'https://github.com/trending' },
+  { name: 'Stack Overflow', desc: "Lecture des discussions sur les nouveautés et bonnes pratiques, notamment les questions les plus votées.", icon: '💬', url: 'https://stackoverflow.com' },
+  { name: 'LinkedIn', desc: "Suivi des ingénieurs et entreprises du secteur pour voir les retours d'expérience et tendances professionnelles.", icon: '🔗', url: 'https://www.linkedin.com' },
+  { name: 'MDN / doc officielle', desc: "Consultation systématique des docs officielles (MDN, React.dev, PHP.net) pour valider les informations collectées.", icon: '📖', url: 'https://developer.mozilla.org' },
 ];
 
 const Veille = () => {
@@ -56,13 +56,19 @@ const Veille = () => {
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {TOOLS.map(tool => (
-            <div key={tool.name} className="bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 p-4 flex gap-3">
+            <a
+              key={tool.name}
+              href={tool.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 p-4 flex gap-3 hover:border-primary-400 dark:hover:border-primary-500 hover:shadow-md transition-all duration-200 group"
+            >
               <span className="text-2xl">{tool.icon}</span>
               <div>
-                <p className="font-semibold text-gray-900 dark:text-white text-sm">{tool.name}</p>
+                <p className="font-semibold text-gray-900 dark:text-white text-sm group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">{tool.name}</p>
                 <p className="text-gray-500 dark:text-gray-400 text-xs mt-1">{tool.desc}</p>
               </div>
-            </div>
+            </a>
           ))}
         </div>
       </section>

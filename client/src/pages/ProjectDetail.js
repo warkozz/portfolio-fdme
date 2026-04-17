@@ -135,9 +135,9 @@ const ProjectDetail = () => {
             </p>
           </div>
 
-          {/* Bouton GitHub */}
-          {project.github_link && (
-            <div className="pt-4 border-t border-gray-100 dark:border-gray-700">
+          {/* Boutons GitHub + Demo */}
+          <div className="pt-4 border-t border-gray-100 dark:border-gray-700 flex flex-wrap gap-3">
+            {project.github_link && (
               <a
                 href={project.github_link}
                 target="_blank"
@@ -149,8 +149,21 @@ const ProjectDetail = () => {
                 </svg>
                 Voir sur GitHub
               </a>
-            </div>
-          )}
+            )}
+            {project.live_link && (
+              <a
+                href={project.live_link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-emerald-600 text-white text-sm font-semibold hover:bg-emerald-700 transition-colors duration-200 shadow-sm"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                </svg>
+                Voir le site
+              </a>
+            )}
+          </div>
         </div>
       </div>
     </Layout>
