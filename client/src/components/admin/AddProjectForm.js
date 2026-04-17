@@ -8,6 +8,7 @@ const AddProjectForm = ({ onAdded }) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [github_link, setGithubLink] = useState('');
+  const [live_link, setLiveLink] = useState('');
   const [competencies, setCompetencies] = useState('');
   const [category, setCategory] = useState('perso');
   const [image, setImage] = useState(null);
@@ -28,6 +29,7 @@ const AddProjectForm = ({ onAdded }) => {
       formData.append('title', title);
       formData.append('description', description);
       formData.append('github_link', github_link);
+      formData.append('live_link', live_link);
       formData.append('competencies', competencies);
       formData.append('category', category);
       if (image) formData.append('image', image);
@@ -37,8 +39,9 @@ const AddProjectForm = ({ onAdded }) => {
       
       setTitle(''); 
       setDescription(''); 
-      setGithubLink(''); 
-      setCompetencies(''); 
+      setGithubLink('');
+      setLiveLink('');
+      setCompetencies('');
       setCategory('perso'); 
       setImage(null);
       setSuccess(true);
@@ -97,6 +100,19 @@ const AddProjectForm = ({ onAdded }) => {
             value={github_link}
             onChange={e => setGithubLink(e.target.value)}
             placeholder="https://github.com/..."
+            className={inputClass}
+          />
+        </div>
+
+        <div>
+          <label className={labelClass}>
+            Lien de démo / site déployé
+          </label>
+          <input
+            type="url"
+            value={live_link}
+            onChange={e => setLiveLink(e.target.value)}
+            placeholder="https://mon-projet.vercel.app"
             className={inputClass}
           />
         </div>
