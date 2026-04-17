@@ -59,8 +59,12 @@
                     title VARCHAR(255) NOT NULL,
                     description TEXT NOT NULL,
                     image VARCHAR(255),
+                    image_base64 LONGTEXT DEFAULT NULL,
+                    image_mime VARCHAR(50) DEFAULT NULL,
                     github_link VARCHAR(255),
+                    live_link VARCHAR(255) DEFAULT NULL,
                     competencies TEXT,
+                    category ENUM('pro', 'ecole', 'perso') DEFAULT 'perso',
                     visible BOOLEAN DEFAULT TRUE,
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                 )");
