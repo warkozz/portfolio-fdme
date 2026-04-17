@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Button from '../Button';
 
@@ -12,8 +12,22 @@ const EditProjectForm = ({ project, onUpdated, onCancel }) => {
   const [competencies, setCompetencies] = useState(project.competencies || '');
   const [category, setCategory] = useState(project.category || 'perso');
   const [image, setImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  // Construire l'aperçu de la nouvelle image sélectionnée
+  useEffect(() => {
+    if (!image) { setImagePreview(null); return; }
+    const url = URL.createObjectURL(image);
+    setImagePreview(url);
+    return () => URL.revokeObjectURL(url);
+  }, [image]);
+
+  // Image actuelle stockée en base64
+  const currentImageSrc = project.image_base64 && project.image_mime
+    ? `data:${project.image_mime};base64,${project.image_base64}`
+    : null;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -134,36 +148,70 @@ const EditProjectForm = ({ project, onUpdated, onCancel }) => {
       </div>
 
       <div>
-        <label className={labelClass}>
-          Changer l'image
-        </label>
-        <div className="mt-1 flex items-center gap-4">
-          <label className="flex-1 cursor-pointer">
-            <div className="px-4 py-3 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg hover:border-primary-600 dark:hover:border-primary-400 transition-colors text-center">
-              <svg className="mx-auto h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg>
-              <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                {image ? image.name : project.image || 'Cliquez pour sélectionner'}
-              </p>
-            </div>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={e => setImage(e.target.files[0])}
-              className="hidden"
+        <label className={labelClass}>Image du projet</label>
+
+        {/* Aperçu image actuelle */}
+        {currentImageSrc && !imagePreview && (
+          <div className="mb-3 flex items-center gap-3 p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
+            <img
+              src={currentImageSrc}
+              alt="Image actuelle"
+              className="w-16 h-16 object-cover rounded-lg border border-green-300 dark:border-green-700 flex-shrink-0"
             />
-          </label>
-          {image && (
+            <div>
+              <p className="text-sm font-medium text-green-800 dark:text-green-300">✓ Image actuelle enregistrée</p>
+              <p className="text-xs text-green-600 dark:text-green-400 mt-0.5">Choisir un fichier ci-dessous pour la remplacer</p>
+            </div>
+          </div>
+        )}
+
+        {/* Aperçu de la nouvelle image sélectionnée */}
+        {imagePreview && (
+          <div className="mb-3 flex items-center gap-3 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+            <img
+              src={imagePreview}
+              alt="Nouvelle image"
+              className="w-16 h-16 object-cover rounded-lg border border-blue-300 dark:border-blue-700 flex-shrink-0"
+            />
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-medium text-blue-800 dark:text-blue-300">Nouvelle image sélectionnée</p>
+              <p className="text-xs text-blue-600 dark:text-blue-400 mt-0.5 truncate">{image?.name}</p>
+            </div>
             <button
               type="button"
               onClick={() => setImage(null)}
-              className="text-red-600 hover:text-red-700 text-sm"
+              className="flex-shrink-0 text-xs text-red-600 hover:text-red-700 dark:text-red-400 font-medium underline"
             >
-              Retirer
+              Annuler
             </button>
-          )}
-        </div>
+          </div>
+        )}
+
+        {/* Aucune image */}
+        {!currentImageSrc && !imagePreview && (
+          <div className="mb-3 p-3 bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-lg">
+            <p className="text-sm text-gray-500 dark:text-gray-400">⚠ Aucune image enregistrée pour ce projet</p>
+          </div>
+        )}
+
+        {/* Zone de sélection */}
+        <label className="block cursor-pointer">
+          <div className="px-4 py-3 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg hover:border-primary-600 dark:hover:border-primary-400 transition-colors text-center">
+            <svg className="mx-auto h-7 w-7 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+              {currentImageSrc ? 'Cliquez pour remplacer l\'image' : 'Cliquez pour ajouter une image'}
+            </p>
+            <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">JPG, PNG, WEBP — max 2 Mo</p>
+          </div>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={e => setImage(e.target.files[0] || null)}
+            className="hidden"
+          />
+        </label>
       </div>
 
       {error && (

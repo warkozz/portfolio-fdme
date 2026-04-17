@@ -5,16 +5,26 @@ import Button from '../Button';
 import { useAdminCRUD } from '../../hooks/useAdminCRUD';
 import { VisibilityBadge, AdminActionButtons, CategoryBadge } from '../AdminComponents';
 
+const CATEGORIES = [
+  { value: 'all',   label: 'Tous',          color: 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-200 border-gray-300 dark:border-gray-600' },
+  { value: 'perso', label: 'Personnel',     color: 'bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300 border-blue-300 dark:border-blue-700' },
+  { value: 'ecole', label: 'Scolaire',      color: 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300 border-green-300 dark:border-green-700' },
+  { value: 'pro',   label: 'Professionnel', color: 'bg-purple-100 text-purple-800 dark:bg-purple-900/40 dark:text-purple-300 border-purple-300 dark:border-purple-700' },
+];
+
 const ProjectsAdmin = () => {
   const { items: projects, loading, error, fetchAll, handleDelete, handleToggleVisibility } = useAdminCRUD('projects', 'projects');
   const [editId, setEditId] = useState(null);
   const [showAddForm, setShowAddForm] = useState(false);
+  const [filterCat, setFilterCat] = useState('all');
 
   const categoryColors = {
     'perso': 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400',
     'ecole': 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400',
     'pro': 'bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400'
   };
+
+  const filteredProjects = filterCat === 'all' ? projects : projects.filter(p => p.category === filterCat);
 
   if (loading) {
     return (
@@ -38,7 +48,7 @@ const ProjectsAdmin = () => {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-            Projets ({projects.length})
+            Projets ({filteredProjects.length}{filterCat !== 'all' && ` / ${projects.length}`})
           </h2>
           <p className="text-gray-600 dark:text-gray-400 text-sm mt-1">
             Gérez vos projets personnels, scolaires et professionnels
@@ -50,6 +60,30 @@ const ProjectsAdmin = () => {
           </svg>
           {showAddForm ? 'Annuler' : 'Nouveau projet'}
         </Button>
+      </div>
+
+      {/* Filtres par catégorie */}
+      <div className="flex flex-wrap gap-2">
+        {CATEGORIES.map(cat => {
+          const count = cat.value === 'all' ? projects.length : projects.filter(p => p.category === cat.value).length;
+          const isActive = filterCat === cat.value;
+          return (
+            <button
+              key={cat.value}
+              onClick={() => setFilterCat(cat.value)}
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium border transition-all ${
+                isActive
+                  ? cat.color + ' ring-2 ring-offset-1 ring-current'
+                  : 'bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400 border-gray-200 dark:border-gray-700 hover:border-gray-400'
+              }`}
+            >
+              {cat.label}
+              <span className={`inline-flex items-center justify-center w-5 h-5 rounded-full text-xs font-bold ${
+                isActive ? 'bg-white/60 dark:bg-black/20' : 'bg-gray-100 dark:bg-gray-700'
+              }`}>{count}</span>
+            </button>
+          );
+        })}
       </div>
 
       {/* Add Form */}
@@ -68,9 +102,13 @@ const ProjectsAdmin = () => {
           <h3 className="mt-2 text-sm font-medium text-gray-900 dark:text-white">Aucun projet</h3>
           <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">Commencez par créer un nouveau projet</p>
         </div>
+      ) : filteredProjects.length === 0 ? (
+        <div className="text-center py-8 bg-gray-50 dark:bg-gray-800/50 rounded-xl border-2 border-dashed border-gray-300 dark:border-gray-700">
+          <p className="text-gray-500 dark:text-gray-400 text-sm">Aucun projet dans cette catégorie</p>
+        </div>
       ) : (
         <div className="grid gap-4">
-          {projects.map(p => (
+          {filteredProjects.map(p => (
             <div key={p.id} className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-md transition-shadow">
               {editId === p.id ? (
                 <div className="p-6">

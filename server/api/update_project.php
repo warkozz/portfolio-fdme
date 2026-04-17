@@ -74,13 +74,27 @@ if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
 if (!in_array($category, ['pro', 'ecole', 'perso'])) {
     $category = 'perso';
 }
-// Mise à jour avec ou sans nouvelle image
-if ($imageBase64 !== null) {
-    $stmt = $pdo->prepare('UPDATE projects SET title=?, description=?, github_link=?, live_link=?, competencies=?, category=?, image_base64=?, image_mime=? WHERE id=?');
-    $stmt->execute([$title, $description, $github_link, $live_link, $competencies, $category, $imageBase64, $imageMime, $id]);
-} else {
-    $stmt = $pdo->prepare('UPDATE projects SET title=?, description=?, github_link=?, live_link=?, competencies=?, category=? WHERE id=?');
-    $stmt->execute([$title, $description, $github_link, $live_link, $competencies, $category, $id]);
+// Mise à jour avec ou sans nouvelle image (avec gestion d'erreur)
+try {
+    if ($imageBase64 !== null) {
+        $stmt = $pdo->prepare('UPDATE projects SET title=?, description=?, github_link=?, live_link=?, competencies=?, category=?, image_base64=?, image_mime=? WHERE id=?');
+        $stmt->execute([$title, $description, $github_link, $live_link, $competencies, $category, $imageBase64, $imageMime, $id]);
+    } else {
+        $stmt = $pdo->prepare('UPDATE projects SET title=?, description=?, github_link=?, live_link=?, competencies=?, category=? WHERE id=?');
+        $stmt->execute([$title, $description, $github_link, $live_link, $competencies, $category, $id]);
+    }
+
+    echo json_encode(['success' => true]);
+
+} catch (PDOException $e) {
+    error_log('update_project.php error: ' . $e->getMessage());
+    http_response_code(500);
+    $resp = ['error' => 'Erreur lors de la mise à jour du projet'];
+    // Fournir plus de détails en développement local
+    if (isset($_SERVER['HTTP_HOST']) && strpos($_SERVER['HTTP_HOST'], 'localhost') !== false) {
+        $resp['details'] = $e->getMessage();
+    }
+    echo json_encode($resp);
+    exit;
 }
-echo json_encode(['success' => true]);
 ?>

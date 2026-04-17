@@ -58,7 +58,17 @@ if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
 if (!in_array($category, ['pro', 'ecole', 'perso'])) {
     $category = 'perso';
 }
-$stmt = $pdo->prepare('INSERT INTO projects (title, description, github_link, live_link, competencies, category, image_base64, image_mime) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
-$stmt->execute([$title, $description, $github_link, $live_link, $competencies, $category, $imageBase64, $imageMime]);
-echo json_encode(['success' => true]);
+try {
+    $stmt = $pdo->prepare('INSERT INTO projects (title, description, github_link, live_link, competencies, category, image_base64, image_mime) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
+    $stmt->execute([$title, $description, $github_link, $live_link, $competencies, $category, $imageBase64, $imageMime]);
+    echo json_encode(['success' => true]);
+} catch (PDOException $e) {
+    error_log('add_project.php error: ' . $e->getMessage());
+    http_response_code(500);
+    $resp = ['error' => 'Erreur lors de l\'ajout du projet'];
+    if (isset($_SERVER['HTTP_HOST']) && strpos($_SERVER['HTTP_HOST'], 'localhost') !== false) {
+        $resp['details'] = $e->getMessage();
+    }
+    echo json_encode($resp);
+}
 ?>
