@@ -8,6 +8,7 @@ const EditProjectForm = ({ project, onUpdated, onCancel }) => {
   const [title, setTitle] = useState(project.title);
   const [description, setDescription] = useState(project.description);
   const [github_link, setGithubLink] = useState(project.github_link || '');
+  const [live_link, setLiveLink] = useState(project.live_link || '');
   const [competencies, setCompetencies] = useState(project.competencies || '');
   const [category, setCategory] = useState(project.category || 'perso');
   const [image, setImage] = useState(null);
@@ -27,6 +28,7 @@ const EditProjectForm = ({ project, onUpdated, onCancel }) => {
       formData.append('title', title);
       formData.append('description', description);
       formData.append('github_link', github_link);
+      formData.append('live_link', live_link);
       formData.append('competencies', competencies);
       formData.append('category', category);
       formData.append('current_image', project.image || '');
@@ -86,6 +88,19 @@ const EditProjectForm = ({ project, onUpdated, onCancel }) => {
             type="url"
             value={github_link}
             onChange={e => setGithubLink(e.target.value)}
+            className={inputClass}
+          />
+        </div>
+
+        <div>
+          <label className={labelClass}>
+            Lien de démo / site déployé
+          </label>
+          <input
+            type="url"
+            value={live_link}
+            onChange={e => setLiveLink(e.target.value)}
+            placeholder="https://mon-projet.vercel.app"
             className={inputClass}
           />
         </div>
