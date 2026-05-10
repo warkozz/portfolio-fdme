@@ -48,9 +48,27 @@ const ProjectDetail = () => {
   const createdYear = project.created_at ? new Date(project.created_at).getFullYear() : null;
   const categoryLabel = CATEGORY_LABELS[project.category] || null;
   // Image src depuis la DB (base64) ou fallback legacy
+  // Image src depuis la DB (base64), fallback legacy ou assets publics
+  const publicImageMap = {
+    'Facture2Clins - SaaS de facturation pour artisans': '/admin2clins.png',
+    'CodeAddict - Site freelance personnel': '/CodeAddict.png',
+    'Logiciel Gestion Conseil de classe': '/conseil.png',
+    'PPE MediaWiki - Installation et Documentation': '/MediaWiki.png',
+    'Site vitrine professionnel pour une entreprise BTP spécialisée en rénovation de salles de sport': '/btpreno.png',
+    'Développeur Mobile React - Protectiv Pint (Capgemini)': '/capgemini.png',
+    'Développeur Web - AuditGen AI (Capgemini)': '/capgemini.png',
+    'Développeur R&D Python/IA - AuditGen AI (Capgemini)': '/capgemini.png',
+    'Application Web Zoo Arcadia': '/image.png',
+    'Application Logiciel Gestion Five 5v5': '/web-5V5.png',
+    'Football Manager 5V5 - Extension Web': '/web-5V5.png',
+    'Software5V5': '/Software5V5.png'
+  };
+
+  const publicFallback = publicImageMap[project.title] || null;
+
   const imgSrc = project.image_base64
     ? `data:${project.image_mime || 'image/jpeg'};base64,${project.image_base64}`
-    : (project.image ? `http://localhost/portfolio-fdme/server/upload/${project.image}` : null);
+    : (project.image ? `http://localhost/portfolio-fdme/server/upload/${project.image}` : publicFallback);
 
   return (
     <Layout containerSize="default">
